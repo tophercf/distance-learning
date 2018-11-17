@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     $('#fullpage').fullpage({
         //options here
         navigation: true,
@@ -17,6 +17,6 @@ queue()
 
 var stackedChart;
 
-function runVisualization(error, odlYear4MIT){
+function runVisualization(error, odlYear4MIT) {
     stackedChart = new StackedChart("stacked-chart", odlYear4MIT);
 };
