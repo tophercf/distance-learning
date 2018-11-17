@@ -35,7 +35,7 @@ StackedChart.prototype.initVis = function(){
     vis.x = d3.scaleTime()
         .range([0, vis.width])
         // custom domain to map to the aggregated values
-        .domain([vis.parseYear("2012"), vis.parseYear("2016")])
+        .domain([vis.parseYear("2012"), vis.parseYear("2015")])
         // .domain(d3.extent(vis.data, function(d) { return vis.parse(d["Course Launch Date"]); }));
     vis.y = d3.scaleLinear()
         .range([vis.height, 0])
@@ -70,6 +70,13 @@ StackedChart.prototype.initVis = function(){
             } 
             return vis.y(d[1]);
         });
+
+    // Tooltip placeholder
+	vis.tooltip = vis.svg.append("text")
+        .attr("class", "focus")
+        .attr("x", 20)
+        .attr("y", 0)
+        .attr("dy", ".35em");
 
 	// (Filter, aggregate, modify data)
 	vis.wrangleData();
@@ -189,9 +196,14 @@ StackedChart.prototype.updateVis = function(orderingType){
             console.log('this is going in d', d);
             return vis.area(d);
     })
-    console.log('stacked data', vis.stackedData);
+    .on("mouseover", function(d,i) {
+        console.log(d.key);
+        console.log("y- using invert", yscale.invert(d3.mouse(this)[1] - 10));
+        console.log(d);
+        vis.tooltip.text(d.key);
+    });
 
-        // Call axis functions with the new domain 
+    // Call axis functions with the new domain 
 	vis.svg.select(".x-axis").call(vis.xAxis);
     vis.svg.select(".y-axis").call(vis.yAxis);
 };
