@@ -34,9 +34,12 @@ StackedChart.prototype.initVis = function(){
     // Scales and axes
     vis.x = d3.scaleTime()
         .range([0, vis.width])
-        .domain(d3.extent(vis.data, function(d) { return vis.parse(d["Course Launch Date"]); }));
+        // custom domain to map to the aggregated values
+        .domain([vis.parseYear("2012"), vis.parseYear("2016")])
+        // .domain(d3.extent(vis.data, function(d) { return vis.parse(d["Course Launch Date"]); }));
     vis.y = d3.scaleLinear()
         .range([vis.height, 0])
+        // custom domain to map to aggregated values
         .domain([0,1560589]);
 	vis.xAxis = d3.axisBottom()
 		  .scale(vis.x);
@@ -52,9 +55,21 @@ StackedChart.prototype.initVis = function(){
       // Stacked area layout
 	vis.area = d3.area()
         .curve(d3.curveCardinal)
-        .x(function(d)  { return vis.x(vis.parseYear(d.Year)); })
-        .y0(function(d) { return vis.y(d[0]); })
-        .y1(function(d) { return vis.y(d[1]); });
+        .x(function(d)  { 
+            console.log('this is the d in area', d)
+            return vis.x(d.data.Year); })
+        .y0(function(d) { 
+            if(isNaN(d[0])){
+                return vis.y(0);
+            }
+            return vis.y(d[0]); 
+        })
+        .y1(function(d) { 
+            if(isNaN(d[1])){
+                return vis.y(0);
+            } 
+            return vis.y(d[1]);
+        });
 
 	// (Filter, aggregate, modify data)
 	vis.wrangleData();
@@ -167,20 +182,11 @@ StackedChart.prototype.updateVis = function(orderingType){
         .attr("class", "area")
         .merge(categories)
         .style("fill", function(d,i) {
-            /*
-            if(vis.filter) {
-              var indexOfFilter = dataCategories.findIndex(function(d){return d == vis.filter});
-              return vis.colorScale(dataCategories[indexOfFilter]);
-          }
-            else {
-              return vis.colorScale(dataCategories[i]);
-          }*/
           return vis.colorScale(vis.dataKeys[i])
         })
     .attr("d", function(d) {
-              /*if(vis.filter)
-            return vis.basicArea(d);
-        else*/
+
+            console.log('this is going in d', d);
             return vis.area(d);
     })
     console.log('stacked data', vis.stackedData);
