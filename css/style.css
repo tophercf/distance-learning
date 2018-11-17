@@ -21,3 +21,8 @@
 #stacked-chart svg {
     background: #d7d9db;
 }
+
+.quote {
+    font-style:italic;
+    color: #ff650a;
+}
