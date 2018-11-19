@@ -30,3 +30,9 @@
 body {
     font-size: 22px;
 }
+
+.quote {
+    font-size: 45px;
+    margin-top: 45px;
+    margin-bottom: 10px;
+}
