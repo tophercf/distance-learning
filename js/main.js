@@ -12,7 +12,8 @@ $(document).ready(function () {
 
 // import data
 queue()
-    .defer(d3.csv, "data/viz1_stacked_bar/odl_year4_mit.csv")
+//     .defer(d3.csv, "data/viz1_stacked_bar/odl_year4_mit.csv")
+    .defer(d3.csv, "data/viz1_stacked_bar/odl_year4_mit_consolidated.csv")
     .await(runVisualization);
 
 var stackedChart;
