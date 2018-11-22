@@ -61,11 +61,10 @@
                         <p>In the graph to the right, we see with the aggregated data collected by HarvardX and MITX
                             that the Massive Online Learning format has grown in popularity year over year.</p>
                             <p>Using the dropdown, check out the trends for these two universities leveraging remote learning.</p>
-                            <select name="hall" id="hall" class="form-control">
-                                <option selected>Total Participants</option>
-                                <option>Gender</option>
-                                <option>Total Hours (Thousands)</option>
-                                <option># Participants Certified</option>
+                            <select class="form-control" id="user-trend-selection" onchange="stackedChart.wrangleData()">
+                                <option value="Sum of Participants" selected>Total Participants</option>
+                                <option value="Total Hours (Thousands)">Total Hours (Thousands)</option>
+                                <option value="Certified"># Participants Certified</option>
                               </select>
                     </div>
                     <div class="col-7">

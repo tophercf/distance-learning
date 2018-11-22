@@ -69,11 +69,6 @@ StackedChart.prototype.initVis = function () {
             }
             return vis.y(d[1]);
         });
-    vis.wrangleData();
-};
-
-StackedChart.prototype.wrangleData = function () {
-    var vis = this;
 
     // convert values
     vis.data.forEach(function (d) {
@@ -89,9 +84,19 @@ StackedChart.prototype.wrangleData = function () {
         };
         vis.displayData.push(row);
     });
-    console.log('display data',vis.displayData);
+    vis.wrangleData();
+};
 
-    // AGGREGATE: participants by year on each category
+StackedChart.prototype.wrangleData = function () {
+    var vis = this;
+
+
+
+    var selectedVal = d3.select("#user-trend-selection").property("value");
+
+    console.log('display data', vis.displayData);
+
+    // AGGREGATE: participants by year on each category    
     vis.rollupData = d3.nest()
         .key(function (d) {
             return d["Course Launch Date"];
@@ -102,7 +107,7 @@ StackedChart.prototype.wrangleData = function () {
         .rollup(function (leaves) {
             var count = 0;
             leaves.forEach(function (d) {
-                count += d["Sum of Participants"];
+                count += d[selectedVal];
             });
             return count;
         })
@@ -111,23 +116,23 @@ StackedChart.prototype.wrangleData = function () {
     console.log('participant count roll up', vis.rollupData);
 
     // SET DOMAIN FOR X 
-    vis.x.domain(d3.extent(vis.rollupData, function(d){
+    vis.x.domain(d3.extent(vis.rollupData, function (d) {
         return vis.parseYear(d.key);
     }));
-    
+
     // SET DOMAIN FOR Y
     var max = 0;
-    vis.rollupData.forEach(function(d){
+    vis.rollupData.forEach(function (d) {
         var yearCount = 0;
-        d.values.forEach(function(k){
+        d.values.forEach(function (k) {
             // set max
             yearCount += k.value;
         });
-        if(yearCount > max){
-            max = yearCount; 
+        if (yearCount > max) {
+            max = yearCount;
         }
     });
-    vis.y.domain([0,max*1.1]);
+    vis.y.domain([0, max * 1.1]);
 
     // FLATTEN: for the stacked
     vis.flattenedParticipantCount = [];
