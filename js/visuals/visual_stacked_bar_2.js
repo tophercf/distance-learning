@@ -31,7 +31,6 @@ StackedChart.prototype.initVis = function () {
         .append("g")
         .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
-    console.log(vis.data);
     // Scales and axes
     vis.x = d3.scaleTime()
         .range([0, vis.width])
@@ -84,17 +83,40 @@ StackedChart.prototype.initVis = function () {
         };
         vis.displayData.push(row);
     });
+
+        // data categories
+        vis.dataKeys = d3.map(vis.displayData, function (d) {
+            return d["Curricular Area2"];
+        }).keys();
+    
+        // Initialize Legend
+        var legend = vis.svg.append('g').attr("class", "legend");
+        var legendRows = legend.selectAll('rect.legend-row').data(vis.dataKeys);
+        legendRows.enter().append('rect')
+            .attr('width', 20)
+            .attr('height', 20)
+            .attr('x', 50)
+            .attr('y', function (d, i) {
+                return i * 30;
+            })
+            .style('fill', function (d, i) {
+                return vis.colorScale(vis.dataKeys[i]);
+            })
+            .attr('class', 'legend-row');
+        legendRows.enter().append('text')
+            .attr('x', 80)
+            .attr('y', function (d, i) {
+                return i * 30 + 15;
+            })
+            .text(function (d) {
+                return d;
+            })
     vis.wrangleData();
 };
 
 StackedChart.prototype.wrangleData = function () {
     var vis = this;
-
-
-
     var selectedVal = d3.select("#user-trend-selection").property("value");
-
-    console.log('display data', vis.displayData);
 
     // AGGREGATE: participants by year on each category    
     vis.rollupData = d3.nest()
@@ -112,8 +134,6 @@ StackedChart.prototype.wrangleData = function () {
             return count;
         })
         .entries(vis.displayData);
-
-    console.log('participant count roll up', vis.rollupData);
 
     // SET DOMAIN FOR X 
     vis.x.domain(d3.extent(vis.rollupData, function (d) {
@@ -152,43 +172,10 @@ StackedChart.prototype.wrangleData = function () {
     vis.flattenedParticipantCount.sort(function (x, y) {
         return d3.ascending(x.Year, y.Year);
     });
-    console.log('flattened', vis.flattenedParticipantCount);
-
-    // data categories
-    vis.dataKeys = d3.map(vis.displayData, function (d) {
-        return d["Curricular Area2"];
-    }).keys();
-
-    // Initialize Legend
-    var legend = vis.svg.append('g').attr("class", "legend");
-    var legendRows = legend.selectAll('rect.legend-row').data(vis.dataKeys);
-    console.log('keys', vis.dataKeys);
-    legendRows.enter().append('rect')
-        .attr('width', 20)
-        .attr('height', 20)
-        .attr('x', 50)
-        .attr('y', function (d, i) {
-            return i * 30;
-        })
-        .style('fill', function (d, i) {
-            return vis.colorScale(vis.dataKeys[i]);
-        })
-        .attr('class', 'legend-row');
-    legendRows.enter().append('text')
-        .attr('x', 80)
-        .attr('y', function (d, i) {
-            return i * 30 + 15;
-        })
-        .text(function (d) {
-            return d;
-        })
-    // var legendText = legend.selectAll('text.legend-row').data(vis.dataKeys)
-
-
+    
     // Initialize stack layout   
     vis.stack = d3.stack()
         .keys(vis.dataKeys);
-    // console.log(vis.stack);
 
     // Update the visualization
     vis.updateVis("index");
@@ -208,7 +195,6 @@ StackedChart.prototype.updateVis = function (orderingType) {
     // Draw the layers
     var categories = vis.svg.selectAll(".area")
         .data(vis.stackedData);
-    // console.log(vis.stackedData);
 
     categories.enter().append("path")
         .attr("class", "area")
@@ -216,18 +202,12 @@ StackedChart.prototype.updateVis = function (orderingType) {
         .style("fill", function (d, i) {
             return vis.colorScale(vis.dataKeys[i])
         })
+        .transition().duration(1000)
         .attr("d", function (d) {
             return vis.area(d);
-        })
-        .on("mouseover", function (d, i) {
-            console.log('data in mouseover', d);
-            // vis.tooltip.text(d.key);
-        })
-        .on("mouseout", function (d) {
-            vis.tooltip.text("");
         });
 
     // Call axis functions with the new domain 
-    vis.svg.select(".x-axis").call(vis.xAxis);
-    vis.svg.select(".y-axis").call(vis.yAxis);
+    vis.svg.select(".x-axis").transition().duration(1000).call(vis.xAxis);
+    vis.svg.select(".y-axis").transition().duration(1000).call(vis.yAxis);
 };
