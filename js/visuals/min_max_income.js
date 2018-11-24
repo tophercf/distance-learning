@@ -28,7 +28,6 @@ MinMaxIncomeChart.prototype.initVis = function() {
 
 
     //-----initialize SVG element------
-    // var parentElement = "min-max-income-chart";
 
     vis.margin = {top: 80, right: 20, bottom: 60, left: 120};
 
@@ -109,6 +108,105 @@ MinMaxIncomeChart.prototype.initVis = function() {
         .attr("dy", ".75em")
         .attr("transform", "rotate(-90)")
         .text("Total household income by year ($)");
+
+    //----generate legend
+
+    vis.legendData = [
+        {
+            year: "2012",
+            color: "blue",
+        },
+        {
+            year: "2016",
+            color: "orange",
+        },
+        {
+            year: "2012/2016",
+            color: "#4B0082",
+        },
+    ];
+
+    console.log("legend data is");
+    console.log(vis.legendData);
+
+    var legendHeight = 90;
+    var legendWidth = 80;
+
+    vis.lengendBackground = vis.svg.append("rect")
+        .attr("class", "legend-background")
+        .attr("height", legendHeight)
+        .attr("width", legendWidth)
+        .attr("x", vis.width - legendWidth)
+        .attr("y", 0)
+        .attr("fill", "grey")
+        .attr("border", "solid black 3px");
+
+    vis.svg.append("g")
+        .attr("class", "legend");
+
+    //draws lenged
+    vis.legend = vis.svg.selectAll('legend')
+        .data(vis.legendData)
+        .enter();
+
+    vis.legend.append('rect')
+        .attr('transform', 'translate(' + (vis.width - legendWidth + 10) + ',' + 0 + ')')
+        .attr('height', 12)
+        .attr('width', 12)
+        .attr('y', function(d, i){
+            return i * 30 + 10
+        })
+        .attr('x', 0)
+        .style('opacity', 0.5)
+        .style('fill', function(d, i){
+            return 'fill', vis.legendData[i].color
+        })
+        .style("stroke", "lightgrey")
+        .style("stroke-width", 2);
+
+    vis.legend.append('text')
+        .attr('x', vis.width)
+        .attr('y', function(d,i){
+            i * 12
+        })
+        .attr("text-anchor", "end")
+        .text(function(d, i) {
+            return vis.legendData[i].year
+        })
+        .attr("font-size", "14");
+
+
+
+    // vis.legend = d3.select('svg')
+    //     .append("g")
+    //     .selectAll("g")
+    //     .data(vis.legendData)
+    //     .enter()
+    //     .append('g')
+    //     .attr('class', 'legend')
+    //     .attr('transform', 'translate(' + (vis.width / 2) + ',' + (vis.height / 100) + ')')
+    //     .attr('color', 'green');
+
+    // vis.legend.append('circle')
+    //     .attr('r', 6)
+    //     .attr('x', i*20 + "px")
+    //     .style('fill', d.color)
+    //     .style("stroke", "lightgrey")
+    //     .style("stroke-width", 2);
+    //
+    // vis.legend.append('text')
+    //     .attr('x', legendRectSize + legendSpacing)
+    //     .attr('y', legendRectSize - legendSpacing)
+    //     .text(function(d) { return d; });
+    //
+    // vis.svg.selectAll("circle")
+    //     .data(vis.allCoordinates)
+    //     .enter()
+    //     .append("circle")
+    //     .attr("r", 6)
+    //     .attr("opacity", 0.5)
+    //     .attr("cx", function(d, i){ return vis.x(d.x) })
+    //     .attr("cy", function(d, i){ return vis.y(d.y) })
 
     vis.wrangleData();
 }
@@ -225,7 +323,7 @@ MinMaxIncomeChart.prototype.updateVis = function() {
         .attr("cy", function(d, i){ return vis.y(d.y) })
         .style("fill", function(d, i) {
             if (i >= (vis.allCoordinates.length / 2))
-                return "lightblue"
+                return "blue"
             else
                 return "orange"
         } )
