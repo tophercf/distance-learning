@@ -1,9 +1,6 @@
 
 /* TO DO:
-- tool tips
-- legend
-- change colors
-- maybe UI slider / transitions?
+- on click
  */
 
 
@@ -60,15 +57,95 @@ LineGraph.prototype.initVis = function () {
         .attr("y", 0)
         .text("Cumulative Lifetime Earnings by Educational Attainment");
 
+    // Axis labels
+    vis.svg.append("text")
+        .attr("class", "x-label")
+        .attr("text-anchor", "end")
+        .attr("x", vis.width)
+        .attr("y", vis.height - 10)
+        .text("Age");
+
+    vis.svg.append("text")
+        .attr("class", "y-label")
+        .attr("text-anchor", "end")
+        .attr("y", 10)
+        .attr("dy", ".75em")
+        .attr("transform", "rotate(-90)")
+        .text("Cumulative Lifetime Earnings ($)");
+
+    // Add legend
+
+    vis.legendTitles = [
+        {
+            "Title": "Associate's Degree",
+            "Color": "#0376BA"
+        },
+        {
+            "Title": "Bachelor's Degree",
+            "Color": "#AAC6EB"
+        },
+        {
+            "Title": "High School Diploma",
+            "Color": "#FF7701"
+        },
+        {
+            "Title": "Some College, No Degree",
+            "Color": "#FDBB71"
+        }];
+
+    vis.legend = vis.svg.selectAll(".legend")
+        .data(vis.legendTitles)
+        .enter().append("g")
+        .attr("class", "legend");
+
+    vis.legend.append("rect")
+        .attr("class", "legend")
+        .attr("x", vis.width - 275)
+        .attr("y",  function(d, i) { return 575 + i * 20; })
+        .attr("width", 15)
+        .attr("height", 15)
+        .style("fill", function(d) {return d.Color;});
+
+    vis.legend.append("text")
+        .attr("x", vis.width - 250)
+        .attr("y", function(d, i) { return 582 + i * 20; })
+        .attr("dy", ".32em")
+        .text(function(d) { return d.Title; });
+
+
     // Add tool tip
-    vis.tip = d3.tip()
+    vis.tipAssociate = d3.tip()
         .attr("class", "d3-tip")
         .offset([-10, 0])
         .html(function(d) {
-            return 1 //"<p>Edition: " + d.EDITION + "</p>" + "<p class = 'title'>" + selected.replace("_", " ").toLowerCase() + ": " + d[selected] + "</p>";
+            return "<p>Associate Degree - Age: " + d.Age + "</p>" + "<p>Lifetime Earnings: $" + d3.format(",")(d['Associate Degree']) + "</p>"
         });
 
-    vis.svg.call(vis.tip);
+    vis.tipBachelors = d3.tip()
+        .attr("class", "d3-tip")
+        .offset([-10, 0])
+        .html(function(d) {
+            return "<p>Bachelor's Degree - Age: " + d.Age + "</p>" + "<p>Lifetime Earnings: $" + d3.format(",")(d['Bachelor\'s Degree']) + "</p>"
+        });
+
+    vis.tipHighSchool = d3.tip()
+        .attr("class", "d3-tip")
+        .offset([-10, 0])
+        .html(function(d) {
+            return "<p>High School Diploma - Age: " + d.Age + "</p>" + "<p>Lifetime Earnings: $" + d3.format(",")(d['High School Diploma']) + "</p>"
+        });
+
+    vis.tipSomeCollege = d3.tip()
+        .attr("class", "d3-tip")
+        .offset([-10, 0])
+        .html(function(d) {
+            return "<p>Some College, No Degree - Age: " + d.Age + "</p>" + "<p>Lifetime Earnings: $" + d3.format(",")(d['Some College, No Degree']) + "</p>"
+        });
+
+    vis.svg.call(vis.tipAssociate);
+    vis.svg.call(vis.tipBachelors);
+    vis.svg.call(vis.tipHighSchool);
+    vis.svg.call(vis.tipSomeCollege);
 
     // (Filter, aggregate, modify data)
     vis.wrangleData();
@@ -129,7 +206,7 @@ LineGraph.prototype.updateVis = function() {
     vis.pathAssociate.attr("class", "line")
         .attr("d", vis.lineAssociate(vis.data))
         .attr("stroke-width", 2)
-        .attr("stroke", "black")
+        .attr("stroke", "#0376BA")
         .attr("fill", "none");
 
     vis.pathBachelors = vis.svg.append("path")
@@ -138,7 +215,7 @@ LineGraph.prototype.updateVis = function() {
     vis.pathBachelors.attr("class", "line")
         .attr("d", vis.lineBachelors(vis.data))
         .attr("stroke-width", 2)
-        .attr("stroke", "black")
+        .attr("stroke", "#AAC6EB")
         .attr("fill", "none");
 
     vis.pathHighSchool = vis.svg.append("path")
@@ -147,7 +224,7 @@ LineGraph.prototype.updateVis = function() {
     vis.pathHighSchool.attr("class", "line")
         .attr("d", vis.lineHighSchool(vis.data))
         .attr("stroke-width", 2)
-        .attr("stroke", "black")
+        .attr("stroke", "#FF7701")
         .attr("fill", "none");
 
     vis.pathSomeCollege = vis.svg.append("path")
@@ -156,7 +233,7 @@ LineGraph.prototype.updateVis = function() {
     vis.pathSomeCollege.attr("class", "line")
         .attr("d", vis.lineSomeCollege(vis.data))
         .attr("stroke-width", 2)
-        .attr("stroke", "black")
+        .attr("stroke", "#FDBB71")
         .attr("fill", "none");
 
     // Add the data points
@@ -169,6 +246,7 @@ LineGraph.prototype.updateVis = function() {
     circleAssociate.enter().append("circle")
         .attr("r", 5)
         .attr("class", "circleAssociate")
+        .attr("fill", "#0376BA")
         // Merge
         .merge(circleAssociate)
         .transition()
@@ -186,6 +264,7 @@ LineGraph.prototype.updateVis = function() {
     circleBachelors.enter().append("circle")
         .attr("r", 5)
         .attr("class", "circleBachelors")
+        .attr("fill", "#AAC6EB")
         // Merge
         .merge(circleBachelors)
         .transition()
@@ -203,6 +282,7 @@ LineGraph.prototype.updateVis = function() {
     circleHighSchool.enter().append("circle")
         .attr("r", 5)
         .attr("class", "circleHighSchool")
+        .attr("fill", "#FF7701")
         // Merge
         .merge(circleHighSchool)
         .transition()
@@ -220,6 +300,7 @@ LineGraph.prototype.updateVis = function() {
     circleSomeCollege.enter().append("circle")
         .attr("r", 5)
         .attr("class", "circleSomeCollege")
+        .attr("fill","#FDBB71")
         // Merge
         .merge(circleSomeCollege)
         .transition()
@@ -227,10 +308,69 @@ LineGraph.prototype.updateVis = function() {
         .attr("cx", function (d) { return vis.x(d.Age); })
         .attr("cy", function(d) { return vis.y(d['Some College, No Degree']); });
 
+    vis.svg.selectAll(".circleAssociate")
+        .on("mouseover", vis.tipAssociate.show)
+        .on("mouseout", vis.tipAssociate.hide)
+        .on("click",  function(d) { updateRatio(d) });
+
+    vis.svg.selectAll(".circleBachelors")
+        .on("mouseover", vis.tipBachelors.show)
+        .on("mouseout", vis.tipBachelors.hide)
+        .on("click",  function(d) { updateRatio(d) });
+
+    vis.svg.selectAll(".circleHighSchool")
+        .on("mouseover", vis.tipHighSchool.show)
+        .on("mouseout", vis.tipHighSchool.hide)
+        .on("click",  function(d) { updateRatio(d) });
+
+    vis.svg.selectAll(".circleSomeCollege")
+        .on("mouseover", vis.tipSomeCollege.show)
+        .on("mouseout", vis.tipSomeCollege.hide)
+        .on("click",  function(d) { updateRatio(d) });
 
     // Update the axes
     vis.svg.select(".x-axis").call(vis.xAxis);
     vis.svg.select(".y-axis").call(vis.yAxis);
 
-
 };
+
+function updateRatio(d) {
+    // Remove data
+    d3.select("#income-detail")
+        .selectAll("*")
+        .remove();
+
+    var detail = "<i style = 'color:#0376BA'>At age " + d.Age + ", an individual with a bachelor's degree has earned:<ul><li>$"
+
+    if (d['Bachelor\'s Degree'] > d['High School Diploma']) {
+        detail = detail + d3.format(",")(d['Bachelor\'s Degree'] - d['High School Diploma']) + " more ";
+    } else {
+        detail = detail + d3.format(",")(d['High School Diploma'] - d['Bachelor\'s Degree']) + " less ";
+    }
+
+    detail = detail + "than somebody with a high school diploma,</li><li>$";
+
+    if (d['Bachelor\'s Degree'] > d['Associate Degree']) {
+        detail = detail + d3.format(",")(d['Bachelor\'s Degree'] - d['Associate Degree']) + " more ";
+    } else {
+        detail = detail + d3.format(",")(d['Associate Degree'] - d['Bachelor\'s Degree']) + " less ";
+    }
+
+    detail = detail + "than somebody with an associate degree,</li><li>$";
+
+    if (d['Bachelor\'s Degree'] > d['Some College, No Degree']) {
+        detail = detail + d3.format(",")(d['Bachelor\'s Degree'] - d['Some College, No Degree']) + " more ";
+    } else {
+        detail = detail + d3.format(",")(d['Some College, No Degree'] - d['Bachelor\'s Degree']) + " less ";
+    }
+
+    detail = detail + "than somebody with some college but no degree.</li>";
+
+    detail = detail + "</ul></i>";
+
+
+    // Append table
+    d3.select("#income-detail")
+        .append("div")
+        .html(detail);
+}
