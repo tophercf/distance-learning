@@ -75,3 +75,23 @@ body {
     top: 100%;
     left: 0;
 }
+.usaMap {
+    fill: #0baebe;
+}
+
+p {
+    font-size: .9rem;
+    text-align: justify;
+}
+/*.institute-circle {*/
+    /*fill: #9a4557;*/
+/*}*/
+.mapTotalInstitutions {
+    font-size: .8rem;
+}
+#play {
+    float: left;
+    width: 24px;
+    height: 24px;
+    margin: -4px 0 0 0;
+}
