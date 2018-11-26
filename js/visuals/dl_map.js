@@ -6,6 +6,7 @@
  */
 
 // TODO:    - Legends
+//          - Tooltip
 //          - Implement Zoom
 
 
