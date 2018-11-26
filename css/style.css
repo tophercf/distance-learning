@@ -1,3 +1,9 @@
+#page0 {
+    background-image: url("../img/education.jpg");
+    background-size: cover;
+}
+
+/*
 #page1 {
     background: aliceblue;
 }
@@ -17,6 +23,7 @@
 #page6 {
     background: #757e82;
 }
+*/
 
 #stacked-chart svg {
     background: #d7d9db;
@@ -24,9 +31,17 @@
 
 .quote {
     font-style:italic;
-    color: #ff650a;
+    color: white;
 }
 
+.quote-author {
+    color: white;
+}
+
+.title-distance {
+    color: white;
+    font-size: 90px;
+}
 body {
     font-size: 22px;
 }

@@ -50,6 +50,12 @@ StackedChart.prototype.initVis = function () {
     vis.svg.append("g")
         .attr("class", "y-axis axis");
 
+            // Chart title
+    vis.svg.append("text")
+        .attr("x", vis.width/10)
+        .attr("y", 0)
+        .text("Online Class Data Shows Upward Trend in Participation");
+
     // INITIALIZE STACKED AREA LAYOUT
     vis.area = d3.area()
         .curve(d3.curveCardinal)
@@ -97,7 +103,7 @@ StackedChart.prototype.initVis = function () {
             .attr('height', 20)
             .attr('x', 50)
             .attr('y', function (d, i) {
-                return i * 30;
+                return i * 30 + 40;
             })
             .style('fill', function (d, i) {
                 return vis.colorScale(vis.dataKeys[i]);
@@ -106,7 +112,7 @@ StackedChart.prototype.initVis = function () {
         legendRows.enter().append('text')
             .attr('x', 80)
             .attr('y', function (d, i) {
-                return i * 30 + 15;
+                return i * 30 + 55;
             })
             .text(function (d) {
                 return d;
