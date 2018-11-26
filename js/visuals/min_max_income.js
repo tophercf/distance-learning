@@ -167,7 +167,7 @@ MinMaxIncomeChart.prototype.initVis = function() {
     vis.legend.append('text')
         .attr('x', vis.width)
         .attr('y', function(d,i){
-            i * 12
+            i*12
         })
         .attr("text-anchor", "end")
         .text(function(d, i) {
