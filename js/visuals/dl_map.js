@@ -2,7 +2,12 @@
  * Distance Learning Map - Object constructor function
  * @param _parentElement 	-- the HTML element in which to draw the map
  * @param _data						-- the dataset 'institutes'
+ *
  */
+
+// TODO:    - Legends
+//          - Implement Zoom
+
 
 // var test,t1,t2,t3;
 
