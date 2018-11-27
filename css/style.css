@@ -3,30 +3,8 @@
     background-size: cover;
 }
 
-/*
-#page1 {
-    background: aliceblue;
-}
-#page2 {
-    background: #f3eceb;
-
-}
-#page3 {
-    background: #71a0ab;
-}
-#page4 {
-    background: #566b78;
-}
-#page5 {
-    background: #c3bebc;
-}
-#page6 {
-    background: #757e82;
-}
-*/
-
-#stacked-chart svg {
-    background: #d7d9db;
+.section {
+    background: whitesmoke;
 }
 
 .quote {
@@ -109,4 +87,13 @@ p {
     width: 24px;
     height: 24px;
     margin: -4px 0 0 0;
+}
+
+
+#map {
+    position:absolute;
+    top:0;
+    bottom:0;
+    width:95%;
+    height: 500px;
 }
