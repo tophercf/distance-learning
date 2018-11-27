@@ -4,28 +4,17 @@
  * @param _parentElement 					-- the HTML element in which to draw the visualization
  * @param _data	                            -- data for graduate vs undergraduate enrolment
  */
+// var vis;
 
 MinMaxIncomeChart = function(_parentElement, _data) {
     this.parentElement = _parentElement;
     this.data = _data;
-    this.displayData = [];
     this.initVis();
 };
 
 MinMaxIncomeChart.prototype.initVis = function() {
 
     var vis = this;
-
-    // console.log("2nd data:");
-    // console.log(vis.data);
-
-    //set configs to data naming conventions
-    vis.selectedStatus = "Graduate";
-    vis.status2012 = vis.selectedStatus + "2012";
-    vis.status2016 = vis.selectedStatus + "2016";
-
-    // console.log("status is " + vis.selectedStatus);
-
 
     //-----initialize SVG element------
 
@@ -98,6 +87,8 @@ MinMaxIncomeChart.prototype.initVis = function() {
         .attr("text-anchor", "end")
         .attr("x", vis.width)
         .attr("y", vis.height - 6)
+        .attr("font-size", "12")
+        .style("font-weight", "bold")
         .text("Percentage of online learners (%)");
 
     //y axis label text
@@ -107,6 +98,8 @@ MinMaxIncomeChart.prototype.initVis = function() {
         .attr("y", 6)
         .attr("dy", ".75em")
         .attr("transform", "rotate(-90)")
+        .attr("font-size", "12")
+        .style("font-weight", "bold")
         .text("Total household income by year ($)");
 
     //----generate legend
@@ -126,11 +119,11 @@ MinMaxIncomeChart.prototype.initVis = function() {
         },
     ];
 
-    console.log("legend data is");
-    console.log(vis.legendData);
+    // console.log("legend data is");
+    // console.log(vis.legendData);
 
     var legendHeight = 90;
-    var legendWidth = 80;
+    var legendWidth = 110;
 
     vis.lengendBackground = vis.svg.append("rect")
         .attr("class", "legend-background")
@@ -138,18 +131,19 @@ MinMaxIncomeChart.prototype.initVis = function() {
         .attr("width", legendWidth)
         .attr("x", vis.width - legendWidth)
         .attr("y", 0)
-        .attr("fill", "grey")
+        .attr("fill", "lightgrey")
         .attr("border", "solid black 3px");
 
     vis.svg.append("g")
         .attr("class", "legend");
 
-    //draws lenged
-    vis.legend = vis.svg.selectAll('legend')
+    //enter selection for legend data
+    var legend = vis.svg.selectAll('legend')
         .data(vis.legendData)
         .enter();
 
-    vis.legend.append('rect')
+    //adds rectangles for legend
+    legend.append('rect')
         .attr('transform', 'translate(' + (vis.width - legendWidth + 10) + ',' + 0 + ')')
         .attr('height', 12)
         .attr('width', 12)
@@ -164,49 +158,18 @@ MinMaxIncomeChart.prototype.initVis = function() {
         .style("stroke", "lightgrey")
         .style("stroke-width", 2);
 
-    vis.legend.append('text')
+    //adds text for legend
+    legend.append('text')
+        .attr("transform", "translate(-80 , 21)")
         .attr('x', vis.width)
         .attr('y', function(d,i){
-            i*12
+            return i * 30
         })
-        .attr("text-anchor", "end")
+        .attr("text-anchor", "start")
         .text(function(d, i) {
             return vis.legendData[i].year
         })
         .attr("font-size", "14");
-
-
-
-    // vis.legend = d3.select('svg')
-    //     .append("g")
-    //     .selectAll("g")
-    //     .data(vis.legendData)
-    //     .enter()
-    //     .append('g')
-    //     .attr('class', 'legend')
-    //     .attr('transform', 'translate(' + (vis.width / 2) + ',' + (vis.height / 100) + ')')
-    //     .attr('color', 'green');
-
-    // vis.legend.append('circle')
-    //     .attr('r', 6)
-    //     .attr('x', i*20 + "px")
-    //     .style('fill', d.color)
-    //     .style("stroke", "lightgrey")
-    //     .style("stroke-width", 2);
-    //
-    // vis.legend.append('text')
-    //     .attr('x', legendRectSize + legendSpacing)
-    //     .attr('y', legendRectSize - legendSpacing)
-    //     .text(function(d) { return d; });
-    //
-    // vis.svg.selectAll("circle")
-    //     .data(vis.allCoordinates)
-    //     .enter()
-    //     .append("circle")
-    //     .attr("r", 6)
-    //     .attr("opacity", 0.5)
-    //     .attr("cx", function(d, i){ return vis.x(d.x) })
-    //     .attr("cy", function(d, i){ return vis.y(d.y) })
 
     vis.wrangleData();
 }
@@ -217,12 +180,19 @@ MinMaxIncomeChart.prototype.wrangleData = function() {
 
     vis = this;
 
-    // console.log("values for selected attribute, " + vis.selectedStatus + "2012");
-    var listValues2012 = vis.data.forEach(function (el, i) {
-        // console.log(el[vis.status2012]);
-    });
+    // console.log("data on return is: ");
+    // console.log(vis.data);
 
-    //find single max value of both 2012 and 2016 sets
+    //gets graduate status button value from HTML
+    vis.selectedStatus = $("input:radio:checked").val();
+    // console.log("grad/undergrad is " + vis.selectedStatus);
+
+    //set configs to data naming conventions
+    vis.status2012 = vis.selectedStatus + "2012";
+    vis.status2016 = vis.selectedStatus + "2016";
+
+
+    // //find single max value of both 2012 and 2016 sets
     vis.max2012and2016 = Math.max(findMax(2012), findMax(2016));
     // console.log("max is " + vis.max2012and2016);
 
@@ -308,29 +278,33 @@ MinMaxIncomeChart.prototype.updateVis = function() {
 
     vis = this;
 
-    vis.x.domain([vis.min2012and2016 - 3, vis.max2012and2016 + 3]);
+    vis.x.domain([vis.min2012and2016 - 2, vis.max2012and2016 + 2]);
     vis.y.domain([0, vis.data.length]);
 
 
-    //generates circles for each data point
-    vis.svg.selectAll("circle")
-        .data(vis.allCoordinates)
-        .enter()
-        .append("circle")
-        .attr("r", 6)
-        .attr("opacity", 0.5)
-        .attr("cx", function(d, i){ return vis.x(d.x) })
-        .attr("cy", function(d, i){ return vis.y(d.y) })
-        .style("fill", function(d, i) {
-            if (i >= (vis.allCoordinates.length / 2))
-                return "blue"
-            else
-                return "orange"
-        } )
-        .style("stroke", "lightgrey")
-        .style("stroke-width", 2);
+    //update selection for dots
+    var circlePlot = vis.svg.selectAll("circle")
+        .data(vis.allCoordinates, function(d){ return d });
 
+    //enter selection for plots
+    circlePlot.enter()
+            .append("circle")
+        .merge(circlePlot)
+            .attr("r", 6)
+            .attr("opacity", 0.5)
+            .attr("cx", function(d, i){ return vis.x(d.x) })
+            .attr("cy", function(d, i){ return vis.y(d.y) })
+            .style("fill", function(d, i) {
+                if (i >= (vis.allCoordinates.length / 2))
+                    return "blue"
+                else
+                    return "orange"
+            } )
+            .style("stroke", "lightgrey")
+            .style("stroke-width", 2);
 
+    //exit selection for plots
+    circlePlot.exit().remove();
 
     vis.svg.select(".y-axis").call(vis.yAxis)
         .selectAll("text")
@@ -342,43 +316,56 @@ MinMaxIncomeChart.prototype.updateVis = function() {
 
     //----generate lines------
 
-    vis.svg.append("g")
-        .attr("class", "lines");
+    // vis.svg.append("g")
+    //     .attr("class", "lines");
 
     //draws lines between points
-    vis.svg.selectAll('lines')
-        .data(vis.allCoordinates)
-        .enter()
-        .append('line')
-        .style('stroke', 'lightgrey')
-        .style('stroke-width', 2)
-        .attr('x1', function(d, i){
-            if (i < (vis.allCoordinates.length / 2)) {   //only looks for coordinates on first half in order to not duplicate
-                return vis.x(Math.min((vis.allCoordinates[i].x), (vis.allCoordinates[i + 11].x)));
-            }
-            // else
-            //     console.log("no value from second half");
-        })
-        .attr('y1', function(d, i) {
-            if (i < (vis.allCoordinates.length / 2)) {   //only looks for coordinates on first half in order to not duplicate
-                return vis.y(Math.min((vis.allCoordinates[i].y), (vis.allCoordinates[i + 11].y)));
-            }
-            // else
-            //     console.log("no value from second half");
-        })
-        .attr('x2', function(d, i) {
-            if (i < (vis.allCoordinates.length / 2)) {   //only looks for coordinates on first half in order to not duplicate
-                return vis.x(Math.max((vis.allCoordinates[i].x), (vis.allCoordinates[i + 11].x)));
-            }
-            // else
-            //     console.log("no value from second half");
-        })
-        .attr('y2', function(d, i) {
-            if (i < (vis.allCoordinates.length / 2)) {   //only looks for coordinates on first half in order to not duplicate
-                return vis.y(Math.max((vis.allCoordinates[i].y), (vis.allCoordinates[i + 11].y)));
-            }
-            // else
-            //     console.log("no value from second half");
-        })
+    var linePlot = vis.svg.selectAll('line')
+        .data(vis.allCoordinates, function(d){ return d});
+
+    linePlot.enter()
+            .append('line')
+        .merge(linePlot)
+            // .transition()
+            // .duration(1000)
+            // .tween("value", function(d, i){
+            //     var i = d3.interpolate(this.value, this.max);
+            //     return function(t){ this.value = i(t);}
+            // })
+                .style('stroke', 'lightgrey')
+            .style('stroke-width', 2)
+            .attr('x1', function(d, i){
+                if (i < (vis.allCoordinates.length / 2)) {   //only looks for coordinates on first half in order to not duplicate
+                    return vis.x(Math.min((vis.allCoordinates[i].x), (vis.allCoordinates[i + 11].x)));
+                }
+            })
+            .attr('y1', function(d, i) {
+                if (i < (vis.allCoordinates.length / 2)) {   //only looks for coordinates on first half in order to not duplicate
+                    return vis.y(Math.min((vis.allCoordinates[i].y), (vis.allCoordinates[i + 11].y)));
+                }
+            })
+            .attr('x2', function(d, i) {
+                if (i < (vis.allCoordinates.length / 2)) {   //only looks for coordinates on first half in order to not duplicate
+                    return vis.x(Math.max((vis.allCoordinates[i].x), (vis.allCoordinates[i + 11].x)));
+                }
+            })
+            .attr('y2', function(d, i) {
+                if (i < (vis.allCoordinates.length / 2)) {   //only looks for coordinates on first half in order to not duplicate
+                    return vis.y(Math.max((vis.allCoordinates[i].y), (vis.allCoordinates[i + 11].y)));
+                }
+            });
+
+    linePlot.exit().remove();
 
 }
+
+
+//listens for button change and calls wrangle data with new undergraduate/graduate status data
+$('#grad-status input').on('change', function() {
+    var newValue = $("input:radio:checked").val();
+    // console.log("new value is " + newValue);
+
+    //skips initviz but re-wrangles data and updates viz accordingly
+    minmaxincomechart.wrangleData();
+});
+
