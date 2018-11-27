@@ -20,23 +20,45 @@ noUiSlider.create(yearSlider, {
     range: {
         'min': [2004],
         'max': [2017]
-    }
+    },
+    pips : {mode: 'steps',density: 10}
 });
 
 
 
-var stepSliderValueElement = document.getElementById('slider-value');
+// var stepSliderValueElement = document.getElementById('slider-value');
 
 
 
-DLMap = function (_parentElement,_usa10m, _data) {
+var map = L.map("map").setView([37.8, -96], 4);
+
+// L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+// }).addTo(map);
+
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    subdomains: 'abcd',
+    maxZoom: 19
+}).addTo(map);
+
+
+
+var pruneCluster = new PruneClusterForLeaflet();
+
+var markers = [];
+
+
+DLMap = function (_parentElement, _data) {
     this.parentElement = _parentElement;
     this.data = _data;
-    this.usa10m = _usa10m;
+    // this.usa10m = _usa10m;
     this.displayData = [];
 
-    this.initVis();
-}
+    //this.initVis();
+    this.wrangleData();
+};
 
 
 DLMap.prototype.initVis = function () {
@@ -85,11 +107,6 @@ DLMap.prototype.initVis = function () {
 
     vis.wrangleData();
 
-
-
-
-
-
 }
 
 DLMap.prototype.wrangleData = function() {
@@ -137,108 +154,81 @@ DLMap.prototype.wrangleData = function() {
     dataD = dataD.map(d => d[0]); //flatten the array of objects
 
 
-
+    // console.log(dataD);
 
     yearSlider.noUiSlider.on('update', function (values, handle, unencoded, tap, positions) {
-        stepSliderValueElement.innerHTML = values[handle].slice(0,-3);
-
+        // stepSliderValueElement.innerHTML = values[handle].slice(0,-3);
         // vis.year = positions;
-
         //this.wrangleData(positions)
 
         vis.displayData = dataD[unencoded - 2004];
 
         vis.updateVis();
 
-        // console.log(unencoded - 2004);
-        // console.log(values);
-        // console.log(handle);
-        // console.log(tap);
-
 
     });
-
-
-    // test= dataD;
-
-
-    // var counter = 0;
-    // var loopPlay = setInterval(
-    //     () => {
-    //         console.log(vis.year);
-    //         vis.year +=1;
-    //         counter +=1;
-    //         vis.updateVis();
-    //
-    //         if (counter === 14) {
-    //             clearInterval(loopPlay);
-    //         }
-    //
-    //
-    //     }
-    //     ,1000
-    // );
-
-    // for (var year = 0; year <= 14 ; year++ ){
-    //     setTimeout(function () {
-    //         //vis.year = year;
-    //         //console.log(vis.year)
-    //     }, 5000);
-    //     //;
-    // }
-
-    // vis.year = yearIndex;
-
-
-
-
-    // t1 = vis.circleColors;
-
-
-
-
 };
 
 DLMap.prototype.updateVis = function () {
     vis = this;
 
-    vis.totals = vis.svg
-        .append("text")
-        .attr("transform", "translate(-10,-50)")
-        .attr("class","mapTotalInstitutions");
-
-    vis.svg.select(".mapTotalInstitutions")
-        .text("Total Institutions with Distance Learning Opportunities = " +  vis.displayData.values.length);
-    
-    vis.circles = vis.svg.selectAll(".institute-circle")
-        .data(vis.displayData.values);
-
-    // console.log(vis.displayData.values.length);
 
 
-    vis.circles
-        .exit().remove();
+    var  points = vis.displayData.values;
 
-    vis.circles
-        .enter()
-        .append("circle")
-        .attr("class","institute-circle")
-        .attr("opacity",0)
-        .attr("r",0)
-        // .attr("fill", c => vis.circleColors(c["Institutional control or affiliation (IC20"+(String('0' + (vis.year + 4)).slice(-2))+")"]))
-        .attr("fill", c => vis.circleColors(c["Institutional control or affiliation (IC2017)"]))
-        .attr("transform",d => "translate("+ vis.projection([d["Longitude location of institution (HD2017)"], d["Latitude location of institution (HD2017)"]])+")")
-        .transition()
-        .duration(500)
-        .attr("opacity",.9)
-        // .attr("title",c => {
-        //     if ( c["Institution Name"] === "Amberton University")
-        //     {
-        //         t2 = c;
-        //         console.log(c);
-        //     }
-        //      return "cc " + c["Institutional control or affiliation (IC20"+(String('0' + (vis.year + 4)).slice(-2))+")"]})
-        .attr("r",2);
+    // console.log(markers);
 
+    // markers.clearLayers();
+
+    // map.removeLayer(markers);
+    //removeLayer(id)
+    pruneCluster.RemoveMarkers();
+
+    for (var i = 0; i < points.length; i++) {
+        var a = points[i];
+
+
+        var marker = new PruneCluster.Marker(a["Latitude location of institution (HD2017)"], a["Longitude location of institution (HD2017)"]);
+        marker.category = a["Institutional control or affiliation (IC2017)"];
+
+        var iconImg,instType;
+        switch(a["Institutional control or affiliation (IC2017)"]) {
+            case 1 :
+                iconImg = "img/university-public.png";
+                instType = "Public";
+                break;
+            case 2 :
+                iconImg = "img/university-private-for-profit.png";
+                instType = "Private for-profit";
+                break;
+            case 3 :
+                iconImg = "img/university-private-not-for-profit-nreg.png";
+                instType = "Private not-for-profit (no religious affiliation)";
+                break;
+            case 4 :
+                iconImg = "img/university-private-not-for-profit-reg.png";
+                instType = "Private not-for-profit (religious affiliation)";
+                break;
+            default:
+                iconImg = "img/university-not-reported.png";
+                instType = "Not reported";
+        }
+
+        var title = a["Institution Name"] + "<br>" + instType;
+        marker.data.popup = title;
+
+
+        // marker.data.icon = L.icon({iconUrl: 'img/university.png'});
+        marker.data.icon = L.icon({iconUrl: iconImg});
+
+        pruneCluster.RegisterMarker(marker);
+
+    }
+    pruneCluster.ProcessView();
+
+
+
+
+    map.addLayer(pruneCluster);
 
 }

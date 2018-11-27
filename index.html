@@ -14,9 +14,16 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/fullpage.min.css">
     <link rel="stylesheet" href="css/nouislider.min.css">
+    <link rel="stylesheet" href="css/leaflet.css">
+    <link rel="stylesheet" href="css/LeafletStyleSheet.css">
+
+
 
     <!-- Custom CSS code -->
     <link rel="stylesheet" href="css/style.css">
+    <style>
+
+    </style>
 </head>
 
 <body>
@@ -88,40 +95,44 @@
 
 
         <div id="page3" class="section">
-            <div class="container-fluid">
+            <div class="container-fluid" style="height: 100%;">
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col mt-4">
                         <h2>It's not just Harvard and MIT Either...</h2>
                         <p>
-                            Over the span of 2012-2016, the number of institutions that added remote learning
+                            Over the span of 2004-2017, the number of institutions that added remote learning
                             opportunities
-                            increased by X%. This is an unprecedented shift into alternative learning and based on the
+                            increased by 30%. This is an unprecedented shift into alternative learning and based on the
                             trend, it's here to stay.
                         </p>
 
-                        <p>
-                            This trend towards increased remote learning and the ability to take course work from high
-                            quality institutes that were previously out of reach due to academic grades or money can
-                            also
-                            be inferred based on supply side consequencies of this trend.
-                            Smaller universities with less prestige are closing at a faster rate, unable to take in the
-                            revenues that were previously available due to georgraphic constraints of some students.
-                            With a
-                            superior complimentary good, we are already seeing consolidation in the market.
-                            Moodies predicts this consolidation will continue to force the small universities to close
-                            or
-                            merge into larger units in order to survive, leading to closures triple of years past.
-                            Source:
-                            https://www.insidehighered.com/news/2015/09/28/moodys-predicts-college-closures-triple-2017
-                        </p>
+                        <!--<p>-->
+                            <!--This trend towards increased remote learning and the ability to take course work from high-->
+                            <!--quality institutes that were previously out of reach due to academic grades or money can-->
+                            <!--also-->
+                            <!--be inferred based on supply side consequencies of this trend.-->
+                            <!--Smaller universities with less prestige are closing at a faster rate, unable to take in the-->
+                            <!--revenues that were previously available due to georgraphic constraints of some students.-->
+                            <!--With a-->
+                            <!--superior complimentary good, we are already seeing consolidation in the market.-->
+                            <!--Moodies predicts this consolidation will continue to force the small universities to close-->
+                            <!--or-->
+                            <!--merge into larger units in order to survive, leading to closures triple of years past.-->
+                            <!--Source:-->
+                            <!--https://www.insidehighered.com/news/2015/09/28/moodys-predicts-college-closures-triple-2017-->
+                        <!--</p>-->
+                        <div class="ml-4 mr-4 mb-5" id="yearSlider"></div>
+                        <!--<div><p class="m-0 mt-2"> Year: <span id="slider-value"></span></p></div>-->
                     </div>
-                    <div class="col-8 p-5">
+                </div>
+                <div class="row">
+                    <div class="col m-4">
                         <!--<img src="img/map.png" class="img-fluid" />-->
                         <!--<button id="play">Play</button>-->
-                        <div id="yearSlider"></div><br>
-                        <div> Year: <span id="slider-value"></span></div>
 
                         <div id="dlMap" class="mt-4"></div>
+                        <div id="map" ></div>
+
                     </div>
                 </div>
 
@@ -168,8 +179,10 @@
     <script src="js/vendor/d3.min.js"></script>
     <script src="js/vendor/queue.min.js"></script>
     <script src="js/vendor/d3-tip.js"></script>
-    <script src="js/vendor/topojson.v1.min.js"></script>
+    <!--<script src="js/vendor/topojson.v1.min.js"></script>-->
     <script src="js/vendor/nouislider.min.js"></script>
+    <script src="js/vendor/leaflet.js"></script>
+    <script src="js/vendor/PruneCluster.js"></script>
 
 
     <!-- Load data, create visualizations -->

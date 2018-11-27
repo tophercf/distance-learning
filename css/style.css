@@ -88,3 +88,12 @@ p {
     height: 24px;
     margin: -4px 0 0 0;
 }
+
+
+#map {
+    position:absolute;
+    top:0;
+    bottom:0;
+    width:95%;
+    height: 500px;
+}
