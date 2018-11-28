@@ -50,11 +50,21 @@ StackedChart.prototype.initVis = function () {
     vis.svg.append("g")
         .attr("class", "y-axis axis");
 
-            // Chart title
+    // Chart title
     vis.svg.append("text")
-        .attr("x", vis.width/10)
+        .attr("x", vis.width / 10)
         .attr("y", 0)
+        .style("font-size", "20px")
         .text("Online Class Data Shows Upward Trend in Participation");
+
+    // y axis label
+    vis.ylabel = vis.svg.append("text")
+        .attr("class", "y-label")
+        .attr("text-anchor", "end")
+        .attr("x", -10)
+        .attr("y", 10)
+        .attr("dy", ".75em")
+        .attr("transform", "rotate(-90)");
 
     // INITIALIZE STACKED AREA LAYOUT
     vis.area = d3.area()
@@ -90,39 +100,47 @@ StackedChart.prototype.initVis = function () {
         vis.displayData.push(row);
     });
 
-        // data categories
-        vis.dataKeys = d3.map(vis.displayData, function (d) {
-            return d["Curricular Area2"];
-        }).keys();
-    
-        // Initialize Legend
-        var legend = vis.svg.append('g').attr("class", "legend");
-        var legendRows = legend.selectAll('rect.legend-row').data(vis.dataKeys);
-        legendRows.enter().append('rect')
-            .attr('width', 20)
-            .attr('height', 20)
-            .attr('x', 50)
-            .attr('y', function (d, i) {
-                return i * 30 + 40;
-            })
-            .style('fill', function (d, i) {
-                return vis.colorScale(vis.dataKeys[i]);
-            })
-            .attr('class', 'legend-row');
-        legendRows.enter().append('text')
-            .attr('x', 80)
-            .attr('y', function (d, i) {
-                return i * 30 + 55;
-            })
-            .text(function (d) {
-                return d;
-            })
+    // data categories
+    vis.dataKeys = d3.map(vis.displayData, function (d) {
+        return d["Curricular Area2"];
+    }).keys();
+
+    // Initialize Legend
+    var legend = vis.svg.append('g').attr("class", "legend");
+    var legendRows = legend.selectAll('rect.legend-row').data(vis.dataKeys);
+    legendRows.enter().append('rect')
+        .attr('width', 20)
+        .attr('height', 20)
+        .attr('x', 70)
+        .attr('y', function (d, i) {
+            return i * 30 + 40;
+        })
+        .style('fill', function (d, i) {
+            return vis.colorScale(vis.dataKeys[i]);
+        })
+        .attr('class', 'legend-row');
+    legendRows.enter().append('text')
+        .attr('x', 100)
+        .attr('y', function (d, i) {
+            return i * 30 + 55;
+        })
+        .text(function (d) {
+            return d;
+        })
     vis.wrangleData();
 };
 
 StackedChart.prototype.wrangleData = function () {
     var vis = this;
     var selectedVal = d3.select("#user-trend-selection").property("value");
+    vis.ylabel.text(selectedVal);
+
+    if (selectedVal == "# Participants Certified") {
+        selectedVal = "Certified";
+    }
+    if (selectedVal == "Total Participants") {
+        selectedVal = "Sum of Participants";
+    }
 
     // AGGREGATE: participants by year on each category    
     vis.rollupData = d3.nest()
@@ -178,13 +196,13 @@ StackedChart.prototype.wrangleData = function () {
     vis.flattenedParticipantCount.sort(function (x, y) {
         return d3.ascending(x.Year, y.Year);
     });
-    
+
     // Initialize stack layout   
     vis.stack = d3.stack()
         .keys(vis.dataKeys);
 
     // Update the visualization
-    vis.updateVis("index");
+    vis.updateVis();
 };
 
 
@@ -192,7 +210,7 @@ StackedChart.prototype.wrangleData = function () {
  * The drawing function
  */
 
-StackedChart.prototype.updateVis = function (orderingType) {
+StackedChart.prototype.updateVis = function () {
     var vis = this;
 
     // calculate the raw y0, y1 coords
