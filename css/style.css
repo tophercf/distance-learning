@@ -19,6 +19,9 @@
 .title-distance {
     color: white;
     font-size: 90px;
+    background: rgb(220, 220, 220); /* Fallback color */
+    background: rgba(239, 231, 212, 0.1); /* Black background with 0.5 opacity */
+    padding: 20px;
 }
 
 .quote {
@@ -27,8 +30,22 @@
     margin-bottom: 10px;
 }
 
+#page0 blockquote {
+    font-style:italic;
+    font-size: 2em;
+    background: rgb(220, 220, 220); /* Fallback color */
+    background: rgba(239, 231, 212, 0.47); /* Black background with 0.5 opacity */
+    padding: 20px;
+}
 
-/*********************/
+#page0 blockquote p {
+    font-size: 1.2em;
+    color: white;
+
+}
+
+
+    /*********************/
 /*  TOOLTIP OVERLAY  */
 /*********************/
 
@@ -91,6 +108,35 @@ p {
     position:absolute;
     top:0;
     bottom:0;
-    width:95%;
+    width:80%;
     height: 500px;
+}
+
+.mapLegends {
+    /*position: absolute;*/
+    /*left: 15%;*/
+}
+.mapLegends ul {
+    font-size: .8em;
+}
+.mapwrapper {
+    width: 80%;
+}
+
+.myDivIcon {
+    text-align: center; /* Horizontally center the text (icon) */
+    line-height: 40px; /* Vertically center the text (icon) */
+}
+
+.mapDataPublic {
+    color: #C62F2F;
+}
+.mapDataPrivateProfitable {
+    color: #7D3474;
+}
+.mapDataPrivateNonProfitableNonRel {
+    color: #374B7F;
+}
+.mapDataPrivateNonProfitableRel {
+    color: #307A50;
 }

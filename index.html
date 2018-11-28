@@ -9,6 +9,7 @@
 
     <!-- Load Google Font -->
     <link href='https://fonts.googleapis.com/css?family=Roboto:100,400,300,400italic,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
     <!-- CSS libraries -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -31,16 +32,19 @@
 
     <div id="fullpage">
         <div id="page0" class="section">
-            <div class="row justify-content-center">
-                <div col-2>
-                    <h1 class="title-distance">The Impact of Distance Learning</h1>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div col-3>
-                    <div class="quote"> "No other nation punishes the “uneducated” as harshly as the United States."
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div>
+                        <h1 class="title-distance rounded">The Impact of Distance Learning</h1>
                     </div>
-                    <p class="quote-author"> - The New York Times</p>
+                </div>
+                <div class="row justify-content-center">
+                    <blockquote class="blockquote text-center mt-xl-4 rounded">
+                        <p class="mb-0"> "No other nation punishes the “uneducated” as harshly as the United States."
+                        </p>
+                        <footer class="blockquote-footer"><cite title="Source Title">The New York Times</cite></footer>
+                        <!--<p class=""> - The New York Times</p>-->
+                    </blockquote>
                 </div>
             </div>
         </div>
@@ -140,16 +144,51 @@
                         <!--https://www.insidehighered.com/news/2015/09/28/moodys-predicts-college-closures-triple-2017-->
                         <!--</p>-->
                         <div class="ml-4 mr-4 mb-5" id="yearSlider"></div>
+                        <div id ="mapLegends" class="d-flex mapLegends">
+                            <!--<span>Institute Type:</span>-->
+                            <ul class="list-inline mx-auto justify-content-center">
+
+                                <li class="list-inline-item">
+                                    <i class="fas fa-university"></i>
+                                    Institute Type:
+                                    <span class="badge badge-info badge-pill mapDataTotal"></span>
+                                </li>
+                                <li class="list-inline-item mapDataPublic"><i class="fas fa-graduation-cap"></i>
+                                    Public
+                                    <span class="badge badge-info badge-pill"></span>
+                                </li>
+                                <li class="list-inline-item mapDataPrivateProfitable"><i class="fas fa-graduation-cap"></i>
+                                    Private for-profit
+                                    <span class="badge badge-info badge-pill"></span>
+                                </li>
+                                <li class="list-inline-item mapDataPrivateNonProfitableNonRel"><i class="fas fa-graduation-cap"></i>
+                                    Private not-for-profit (no religious affiliation)
+                                    <span class="badge badge-info badge-pill"></span>
+                                </li>
+                                <li class="list-inline-item mapDataPrivateNonProfitableRel"><i class="fas fa-graduation-cap"></i>
+                                    Private not-for-profit (religious affiliation)
+                                    <span class="badge badge-info badge-pill"></span>
+                                </li>
+
+                            </ul>
+
+                        </div>
                         <!--<div><p class="m-0 mt-2"> Year: <span id="slider-value"></span></p></div>-->
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col m-4">
+                    <div class="col d-flex">
                         <!--<img src="img/map.png" class="img-fluid" />-->
                         <!--<button id="play">Play</button>-->
 
-                        <div id="dlMap" class="mt-4"></div>
-                        <div id="map"></div>
+<!--<<<<<<< Updated upstream-->
+                        <!--<div id="dlMap" class="mt-4"></div>-->
+                        <!--<div id="map"></div>-->
+<!--=======-->
+                        <div class="mapwrapper mt-4 mx-auto justify-content-center">
+                            <div id="map"></div>
+                        </div>
+
 
                     </div>
                 </div>
