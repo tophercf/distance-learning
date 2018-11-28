@@ -18,7 +18,7 @@ MinMaxIncomeChart.prototype.initVis = function() {
 
     //-----initialize SVG element------
 
-    vis.margin = {top: 80, right: 20, bottom: 60, left: 120};
+    vis.margin = {top: 20, right: 20, bottom: 60, left: 60};
 
     vis.size = 600;
 
@@ -326,14 +326,9 @@ MinMaxIncomeChart.prototype.updateVis = function() {
     linePlot.enter()
             .append('line')
         .merge(linePlot)
-            // .transition()
-            // .duration(1000)
-            // .tween("value", function(d, i){
-            //     var i = d3.interpolate(this.value, this.max);
-            //     return function(t){ this.value = i(t);}
-            // })
-                .style('stroke', 'lightgrey')
+            .style('stroke', 'lightgrey')
             .style('stroke-width', 2)
+        // .transition().duration(1000)
             .attr('x1', function(d, i){
                 if (i < (vis.allCoordinates.length / 2)) {   //only looks for coordinates on first half in order to not duplicate
                     return vis.x(Math.min((vis.allCoordinates[i].x), (vis.allCoordinates[i + 11].x)));
@@ -354,6 +349,13 @@ MinMaxIncomeChart.prototype.updateVis = function() {
                     return vis.y(Math.max((vis.allCoordinates[i].y), (vis.allCoordinates[i + 11].y)));
                 }
             });
+    //
+    // linePlot.transition()
+    // .duration(1000)
+    // .tween("value", function(d, i){
+    //     var i = d3.interpolate(this.value, this.max);
+    //     return function(t){ this.value = i(t);}
+    // })
 
     linePlot.exit().remove();
 
