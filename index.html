@@ -33,13 +33,14 @@
         <div id="page0" class="section">
             <div class="row justify-content-center">
                 <div col-2>
-                        <h1 class="title-distance">The Impact of Distance Learning</h1>
+                    <h1 class="title-distance">The Impact of Distance Learning</h1>
                 </div>
             </div>
             <div class="row justify-content-center">
                 <div col-3>
-                        <div class="quote"> "No other nation punishes the “uneducated” as harshly as the United States." </div>
-                        <p class="quote-author"> - The New York Times</p>
+                    <div class="quote"> "No other nation punishes the “uneducated” as harshly as the United States."
+                    </div>
+                    <p class="quote-author"> - The New York Times</p>
                 </div>
             </div>
         </div>
@@ -48,20 +49,25 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-5">
-                        <div><h2>Not Having a Degree Can Cost You</h2></div>
-                        
-                        <p>The chart on the left shows the difference in lifetime earnings by highest educational attainment.
-                        While there may not be a large difference early on,
-                        those with bachelor's degrees will have earned almost $400,000 more than those with just high school diplomas.</p>
+                        <div>
+                            <h2>Not Having a Degree Can Cost You</h2>
+                        </div>
+
+                        <p>The chart on the left shows the difference in lifetime earnings by highest educational
+                            attainment.
+                            While there may not be a large difference early on,
+                            those with bachelor's degrees will have earned almost $400,000 more than those with just
+                            high school diplomas.</p>
                         <p><b>Hover</b> over the data points to see the cumulative lifetime earnings.</p>
-                        <p><b>Click</b> the data points to see the difference in cumulative lifetime earnings between different groups.</p>
-                        <div id = "income-detail"></div>
+                        <p><b>Click</b> the data points to see the difference in cumulative lifetime earnings between
+                            different groups.</p>
+                        <div id="income-detail"></div>
                     </div>
                     <div class="col-7">
-                        <div id = "income-chart"></div>
+                        <div id="income-chart"></div>
                     </div>
                 </div>
-                
+
             </div>
 
         </div>
@@ -78,19 +84,20 @@
 
                         <p>In the graph to the right, we see with the aggregated data collected by HarvardX and MITX
                             that the Massive Online Learning format has grown in popularity year over year.</p>
-                            <p>Using the dropdown, check out the trends for these two universities leveraging remote learning.</p>
-                            <select class="form-control" id="user-trend-selection" onchange="stackedChart.wrangleData()">
-                                <option value="Sum of Participants" selected>Total Participants</option>
-                                <option value="Total Hours (Thousands)">Total Hours (Thousands)</option>
-                                <option value="Certified"># Participants Certified</option>
-                              </select>
-                            <p>
-                                The four functional areas we looked at include:
-                                - CS: Computer Science
-                                - GHSS: Government, Health, and Social Science
-                                - HHRDE: Humanities, History, Design, Religion, and Education
-                                - STEM: Science, Technology, Engineering, and Mathematics 
-                            </p>
+                        <p>Using the dropdown, check out the trends for these two universities leveraging remote
+                            learning.</p>
+                        <select class="form-control" id="user-trend-selection" onchange="stackedChart.wrangleData()">
+                            <option value="Sum of Participants" selected>Total Participants</option>
+                            <option value="Total Hours (Thousands)">Total Hours (Thousands)</option>
+                            <option value="Certified"># Participants Certified</option>
+                        </select>
+                        <p>
+                            The four functional areas we looked at include:
+                            - CS: Computer Science
+                            - GHSS: Government, Health, and Social Science
+                            - HHRDE: Humanities, History, Design, Religion, and Education
+                            - STEM: Science, Technology, Engineering, and Mathematics
+                        </p>
                     </div>
                     <div class="col-7">
                         <div id="stacked-chart"></div>
@@ -114,19 +121,19 @@
                         </p>
 
                         <!--<p>-->
-                            <!--This trend towards increased remote learning and the ability to take course work from high-->
-                            <!--quality institutes that were previously out of reach due to academic grades or money can-->
-                            <!--also-->
-                            <!--be inferred based on supply side consequencies of this trend.-->
-                            <!--Smaller universities with less prestige are closing at a faster rate, unable to take in the-->
-                            <!--revenues that were previously available due to georgraphic constraints of some students.-->
-                            <!--With a-->
-                            <!--superior complimentary good, we are already seeing consolidation in the market.-->
-                            <!--Moodies predicts this consolidation will continue to force the small universities to close-->
-                            <!--or-->
-                            <!--merge into larger units in order to survive, leading to closures triple of years past.-->
-                            <!--Source:-->
-                            <!--https://www.insidehighered.com/news/2015/09/28/moodys-predicts-college-closures-triple-2017-->
+                        <!--This trend towards increased remote learning and the ability to take course work from high-->
+                        <!--quality institutes that were previously out of reach due to academic grades or money can-->
+                        <!--also-->
+                        <!--be inferred based on supply side consequencies of this trend.-->
+                        <!--Smaller universities with less prestige are closing at a faster rate, unable to take in the-->
+                        <!--revenues that were previously available due to georgraphic constraints of some students.-->
+                        <!--With a-->
+                        <!--superior complimentary good, we are already seeing consolidation in the market.-->
+                        <!--Moodies predicts this consolidation will continue to force the small universities to close-->
+                        <!--or-->
+                        <!--merge into larger units in order to survive, leading to closures triple of years past.-->
+                        <!--Source:-->
+                        <!--https://www.insidehighered.com/news/2015/09/28/moodys-predicts-college-closures-triple-2017-->
                         <!--</p>-->
                         <div class="ml-4 mr-4 mb-5" id="yearSlider"></div>
                         <!--<div><p class="m-0 mt-2"> Year: <span id="slider-value"></span></p></div>-->
@@ -138,7 +145,7 @@
                         <!--<button id="play">Play</button>-->
 
                         <div id="dlMap" class="mt-4"></div>
-                        <div id="map" ></div>
+                        <div id="map"></div>
 
                     </div>
                 </div>
@@ -155,23 +162,35 @@
                         <h2>Who is sticking with online learning?</h2>
                         </br>
                         <p>
-                            Despite an overall increase in online learners, not all strata of society are seeing proportional growth in participation. Trends differ signficantly between graduate and undergraduate students, with low- and high-earning graduate students seeing dramatic shifts, with online learners from wealthier backgrounds gaining relative to other areas. Conversely, undergraduates over the same period were relatively stable, and saw high participation from lower income groups. Explore the data with the below button toggle:
+                            Despite an overall increase in online learners, not all strata of society are seeing
+                            proportional growth in participation. Trends differ signficantly between graduate and
+                            undergraduate students, with low- and high-earning graduate students seeing dramatic
+                            shifts, with online learners from wealthier backgrounds gaining relative to other areas.
+                            Conversely, undergraduates over the same period were relatively stable, and saw high
+                            participation from lower income groups. Explore the data with the below button toggle:
                         </p>
                         <form id="grad-status" class="btn-group btn-group-toggle" data-toggle="buttons">
                             <label class="btn btn-sm btn-secondary active">
-                                <input class="grad-status" type="radio" name="buttonName" value="Undergraduate" id="Undergraduate"> Undergraduate
+                                <input class="grad-status" type="radio" name="buttonName" value="Undergraduate" id="Undergraduate">
+                                Undergraduate
                             </label>
                             <label class="btn btn-sm btn-secondary">
-                                <input class="grad-status" type="radio" name="buttonName" value="Graduate" id="Graduate"> Graduate
+                                <input class="grad-status" type="radio" name="buttonName" value="Graduate" id="Graduate">
+                                Graduate
                             </label>
                         </form>
                         </br>
                         </br>
                         <p>
-                            While online learning has been framed as a tool for democratizing education for all incomes and abilities, the data here indicate that groups joining up and sticking with online learning are relatively fractured. For upper-level courses and specializations, top earners are increasingly represented. This calls into question all over again: who <em>really</em> benefits from online learning? And is it truly as egalitarian as it's made out to be?
+                            While online learning has been framed as a tool for democratizing education for all incomes
+                            and abilities, the data here indicate that groups joining up and sticking with online
+                            learning are relatively fractured. For upper-level courses and specializations, top earners
+                            are increasingly represented. This calls into question all over again: who <em>really</em>
+                            benefits from online learning? And is it truly as egalitarian as it's made out to be?
                         </p>
                         </br>
-                        <p/>Source: <a href="http://www.learninghouse.com/wp-content/uploads/2017/10/OCS-2016-Report.pdf" target="_blank">Online Students 2016: Comprehensive Data on Demands and Preferences</a></p>
+                        <p />Source: <a href="http://www.learninghouse.com/wp-content/uploads/2017/10/OCS-2016-Report.pdf"
+                            target="_blank">Online Students 2016: Comprehensive Data on Demands and Preferences</a></p>
 
 
                     </div>
@@ -185,10 +204,10 @@
     <div id="page5" class="section fp-auto-height">
         <div class="container">
             <div class="row">
-                
+
             </div>
             <div class="row">
-                
+
             </div>
         </div>
     </div>
