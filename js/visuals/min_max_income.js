@@ -115,7 +115,7 @@ MinMaxIncomeChart.prototype.initVis = function() {
         },
         {
             year: "2012/2016",
-            color: "#4B0082",
+            color: "grey",
         },
     ];
 
@@ -293,10 +293,10 @@ MinMaxIncomeChart.prototype.updateVis = function() {
             .attr("cx", function(d, i){ return vis.x(d.x) })
             .attr("cy", function(d, i){ return vis.y(d.y) })
             .style("fill", function(d, i) {
-                if (i < (vis.allCoordinates.length / 2)) {
-                    if (vis.allCoordinates[i].x == vis.allCoordinates[i + 11].x){
+                if (i > (vis.allCoordinates.length / 2)) {
+                    if (vis.allCoordinates[i].x == vis.allCoordinates[i - 11].x){
                         console.log(i + "coordinates match");
-                        return "green";
+                        return "grey";
                     }
                     else if (i >= (vis.allCoordinates.length / 2))
                         return "blue";
