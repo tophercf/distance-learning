@@ -151,7 +151,6 @@ MinMaxIncomeChart.prototype.initVis = function() {
             return i * 30 + 10
         })
         .attr('x', 0)
-        .style('opacity', 0.5)
         .style('fill', function(d, i){
             return 'fill', vis.legendData[i].color
         })
@@ -291,14 +290,25 @@ MinMaxIncomeChart.prototype.updateVis = function() {
             .append("circle")
         .merge(circlePlot)
             .attr("r", 6)
-            .attr("opacity", 0.5)
             .attr("cx", function(d, i){ return vis.x(d.x) })
             .attr("cy", function(d, i){ return vis.y(d.y) })
             .style("fill", function(d, i) {
-                if (i >= (vis.allCoordinates.length / 2))
-                    return "blue"
-                else
-                    return "orange"
+                if (i < (vis.allCoordinates.length / 2)) {
+                    if (vis.allCoordinates[i].x == vis.allCoordinates[i + 11].x){
+                        console.log(i + "coordinates match");
+                        return "green";
+                    }
+                    else if (i >= (vis.allCoordinates.length / 2))
+                        return "blue";
+                    else
+                        return "orange";
+                }
+                else {
+                    if (i >= (vis.allCoordinates.length / 2))
+                        return "blue";
+                    else
+                        return "orange";
+                }
             } )
             .style("stroke", "lightgrey")
             .style("stroke-width", 2);
