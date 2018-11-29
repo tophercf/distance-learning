@@ -143,3 +143,11 @@ p {
 .mapDataPrivateNonProfitableRel {
     color: #307A50;
 }
+
+.blurb{
+    padding: 50px;
+}
+
+.chart-padding{
+    padding: 20px;
+}

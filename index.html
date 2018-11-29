@@ -52,7 +52,7 @@
         <div id="page1" class="section">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-5">
+                    <div class="col-5 blurb">
                         <div>
                             <h2>Not Having a Degree Can Cost You</h2>
                         </div>
@@ -81,7 +81,7 @@
             <div class="container">
 
                 <div class="row">
-                    <div class="col-5">
+                    <div class="col-5 blurb">
                         <h2>Could Online Courses Help Close the Gap?</h2>
                         <p>With the rise of online courses, many educational institutions have expanded or started a
                             distance learning option.</p>
@@ -98,10 +98,10 @@
                         <p>
                             <div>The four functional areas we looked at include:</div>
                             <ul>
-                                <li>CS: Computer Science</li>
-                                <li>GHSS: Government, Health, and Social Science</li>
-                                <li>HHRDE: Humanities, History, Design, Religion, and Education</li>
-                                <li>STEM: Science, Technology, Engineering, and Mathematics</li>
+                                <li><b>CS</b>: Computer Science</li>
+                                <li><b>GHSS</b>: Government, Health, and Social Science</li>
+                                <li><b>HHRDE</b>: Humanities, History, Design, Religion, and Education</li>
+                                <li><b>STEM</b>: Science, Technology, Engineering, and Mathematics</li>
                             </ul>
                         </p>
                         <div>Source: <a href="http://year4.odl.mit.edu/appendix.html">HarvardX-MITx Year 4 Report</a>
@@ -209,19 +209,15 @@
         <div id="page4" class="section">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-8">
-                        <div id="min-max-income-chart"></div>
-                    </div>
-                    <div class="col-4">
+                    <div class="col-5 blurb">
                         <h2>Who is sticking with online learning?</h2>
                         </br>
                         <p>
-                            Despite an overall increase in online learners, not all strata of society are seeing
-                            proportional growth in participation. Trends differ signficantly between graduate and
+                            Despite an overall increase in online learners, retention trends differ significantly between graduate and
                             undergraduate students, with low- and high-earning graduate students seeing dramatic
-                            shifts, with online learners from wealthier backgrounds gaining relative to other areas.
-                            Conversely, undergraduates over the same period were relatively stable, and saw high
-                            participation from lower income groups. Explore the data with the below button toggle:
+                            shifts.
+                        </p>
+                        <p> So, which groups are sticking with online learning? Explore the data by toggling between groups:
                         </p>
                         <form id="grad-status" class="btn-group btn-group-toggle" data-toggle="buttons">
                             <label class="btn btn-sm btn-secondary active">
@@ -235,18 +231,11 @@
                         </form>
                         </br>
                         </br>
-                        <p>
-                            While online learning has been framed as a tool for democratizing education for all incomes
-                            and abilities, the data here indicate that groups joining up and sticking with online
-                            learning are relatively fractured. For upper-level courses and specializations, top earners
-                            are increasingly represented. This calls into question all over again: who <em>really</em>
-                            benefits from online learning? And is it truly as egalitarian as it's made out to be?
-                        </p>
-                        </br>
                         <p>Source: <a href="http://www.learninghouse.com/wp-content/uploads/2017/10/OCS-2016-Report.pdf"
                                 target="_blank">Online Students 2016: Comprehensive Data on Demands and Preferences</a></p>
-
-
+                    </div>
+                    <div class="col-7">
+                        <div id="min-max-income-chart"></div>
                     </div>
                 </div>
             </div>
@@ -254,25 +243,35 @@
         <!-- FOOTER SECTION -->
         <div id="page5" class="section">
             <div class="container">
-                <div class="row">
-                    <div class="col">
-                        <div class="row">
-                            <h3>Key Takeaways</h3>
-                            <div>
-                                Distance learning has grown in popularity, a key trend in education. The overall
-                                penetration of remote learning within institutions, and specific demographics are still
-                                in its infancy. Schools and education officials should strive to create an environment
-                                where all members of society can access knowledge, to provide the maximization of
-                                benefit and continue to build foundations to push the existing boundaries of education
-                                and learning.
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <h3>Data Sources & Related Work</h3>
-                            <div>
-                                Inspirations from various papers, web sites, and visualizations discussed during the
-                                course.
+                <h2>Conclusion</h2>
+                </br>
+                <div class="span4">
+                    <img style="float:left" src="img/icons8-pie-chart-filled-50.png" height="24" width="24"/>
+                    <div><h3>   Sharing opportunities </h3></div>
+                    <p style="clear:both">
+                        As distance learning grows, its impact is increasingly uneven. While technical offerings -- and
+                        the opportunities that accompany them -- have expanded, not all areas of the country have seen such
+                        uniform growth. And if specializations are the new normal, then graduate students should be more representative of
+                        society at large, not just the privileged few.
+                    </p>
+                </div>
+                <div class="span4">
+                    <img style="float:left" src="img/icons8-workspace-64.png" height="24" width="24"/>
+                    <div><h3>   Progressive and responsive  </h3></div>
+                    <p style="clear:both">
+                        The future of online learning is one in which administrators and educators strive to create an environment
+                        where all members of society can access knowledge, to provide the maximization of
+                        benefit, and to continue to build foundations to push the existing boundaries of education
+                        and learning.
+                    </p>
+                </div>
+                <div class="span4">
+                    <img style="float:left" src="img/icons8-books-64.png" height="24" width="24"/>
+                    <div><h3>   Further investigation</h3></div>
+                        <p style="clear:both">
+                            To read up more on the topic, check out these resources that inspired our own analyses.
+                        </p>
+                         <div class="row">
                                 <ul>
                                     <li><a href="https://www.nytimes.com/2018/05/16/opinion/college-useful-cost-jobs.html">NYTimes:
                                             College May Not Be Worth It Anymore</a></li>
@@ -285,17 +284,17 @@
                                     <li><a href="https://www.youtube.com/watch?v=QPKKQnijnsM">Wealth Inequality in
                                             America - Class Visualization</a></li>
                                 </ul>
+
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h3>Team Members</h3>
+                                <div class="col">Ahmed Al Hasani</div>
+                                <div class="col">Claudia Yang</div>
+                                <div class="col">Josh Weiss</div>
+                                <div class="col">Chris Fowlkes</div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col">
-                        <h3>Team Members</h3>
-                        <div class="col">Ahmed Al Hasani</div>
-                        <div class="col">Claudia Yang</div>
-                        <div class="col">Josh Weiss</div>
-                        <div class="col">Chris Fowlkes</div>
-
-                    </div>
 
                 </div>
             </div>
