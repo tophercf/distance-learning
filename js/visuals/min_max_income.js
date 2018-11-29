@@ -18,7 +18,7 @@ MinMaxIncomeChart.prototype.initVis = function() {
 
     //-----initialize SVG element------
 
-    vis.margin = {top: 20, right: 20, bottom: 60, left: 60};
+    vis.margin = {top: 80, right: 20, bottom: 60, left: 100};
 
     vis.size = 600;
 
