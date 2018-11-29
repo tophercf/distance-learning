@@ -29,6 +29,40 @@ DLMap.prototype.initVis = function () {
 
     vis.yearSlider = document.getElementById('yearSlider');
 
+    vis.playSlider = $('#playSlider');
+    vis.timer;
+
+    vis.startSlider = function(){
+        dlMap.yearSlider.noUiSlider.set(+dlMap.yearSlider.noUiSlider.get()+1);
+        if (+vis.yearSlider.noUiSlider.get() === 2017) {
+            clearInterval(vis.timer);
+            $('#playSlider').removeClass('fa-pause-circle').addClass('fa-play-circle');
+        };
+    };
+
+    vis.playSlider.on("click", function () {
+        if (vis.playSlider.hasClass("fa-play-circle")) {
+            $('#playSlider').removeClass('fa-play-circle').addClass('fa-pause-circle');
+            if (+vis.yearSlider.noUiSlider.get() !== 2017) {
+                console.log("Play");
+                vis.timer = setInterval(vis.startSlider, 2000);
+            }
+            else
+            {
+                console.log("Reset");
+                dlMap.yearSlider.noUiSlider.set(2004);
+                vis.timer = setInterval(vis.startSlider, 2000);
+                // clearInterval(vis.timer);
+            }
+        }
+        else //if (vis.playSlider.hasClass("fa-pause-circle"))
+        {
+            $('#playSlider').removeClass('fa-pause-circle').addClass('fa-play-circle');
+            clearInterval(vis.timer);
+        }
+
+    });
+
     noUiSlider.create(yearSlider, {
         start: [2004],
         step: 1,
@@ -52,12 +86,11 @@ DLMap.prototype.initVis = function () {
 
     vis.pruneCluster = new PruneClusterForLeaflet();
 
-
-
-
     vis.wrangleData();
 
 }
+
+
 
 DLMap.prototype.wrangleData = function() {
     var vis = this;

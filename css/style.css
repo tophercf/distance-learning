@@ -97,10 +97,13 @@ p {
     font-size: .8rem;
 }
 #play {
-    float: left;
-    width: 24px;
-    height: 24px;
-    margin: -4px 0 0 0;
+    /*float: left;*/
+    font-size: 2em;
+    position: absolute;
+    top: -0.4em;
+    right: 0;
+    cursor: pointer;
+    color: #17a2b8;
 }
 
 
