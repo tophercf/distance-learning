@@ -19,7 +19,7 @@ StackedChart.prototype.initVis = function () {
     var vis = this;
     vis.margin = { top: 80, right: 20, bottom: 20, left: 80 };
 
-    vis.size = 800;
+    vis.size = 640;
 
     vis.width = vis.size - vis.margin.left - vis.margin.right,
         vis.height = vis.size - vis.margin.top - vis.margin.bottom;

@@ -19,8 +19,8 @@ LineGraph.prototype.initVis = function () {
     var vis = this;
 
     // Initialize SVG area
-    vis.size = 800;
-    vis.margin = { top: 80, right: 20, bottom: 20, left: 80 };
+    vis.size = 640;
+    vis.margin = { top: 20, right: 20, bottom: 20, left: 80 };
 
     vis.width = vis.size - vis.margin.left - vis.margin.right;
     vis.height = vis.size - vis.margin.top - vis.margin.bottom;
@@ -100,16 +100,17 @@ LineGraph.prototype.initVis = function () {
 
     vis.legend.append("rect")
         .attr("class", "legend")
-        .attr("x", vis.width - 275)
-        .attr("y",  function(d, i) { return 575 + i * 20; })
+        .attr("x", vis.width /1.5)
+        .attr("y",  function(d, i) { return (vis.width /1.5) + i * 20; })
         .attr("width", 15)
         .attr("height", 15)
         .style("fill", function(d) {return d.Color;});
 
     vis.legend.append("text")
-        .attr("x", vis.width - 250)
-        .attr("y", function(d, i) { return 582 + i * 20; })
-        .attr("dy", ".32em")
+        .attr("x", (vis.width/1.5) + 20 )
+        .attr("y", function(d, i) { return (vis.width /1.5) + i * 20; })
+        .attr("dy", ".82em")
+        .attr("class", "lineGraphLegendText")
         .text(function(d) { return d.Title; });
 
 
@@ -340,7 +341,7 @@ function updateRatio(d) {
         .selectAll("*")
         .remove();
 
-    var detail = "<i style = 'color:#0376BA'>At age " + d.Age + ", an individual with a bachelor's degree has earned:<ul><li>$"
+    var detail = "<p class='lineGraphCard'>At age <b>" + d.Age + "</b>, an individual with a bachelor's degree has earned:</p><ul class='lineGraphCardList'><li>$"
 
     if (d['Bachelor\'s Degree'] > d['High School Diploma']) {
         detail = detail + d3.format(",")(d['Bachelor\'s Degree'] - d['High School Diploma']) + " more ";
@@ -366,11 +367,17 @@ function updateRatio(d) {
 
     detail = detail + "than somebody with some college but no degree.</li>";
 
-    detail = detail + "</ul></i>";
+    detail = detail + "</ul>";
 
 
     // Append table
     d3.select("#income-detail")
         .append("div")
-        .html(detail);
+        .style("opacity",0)
+        .attr("class","card-body")
+        .html(detail)
+        .transition()
+        .duration(750)
+        .style("opacity",1)
+
 }

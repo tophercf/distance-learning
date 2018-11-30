@@ -1,3 +1,13 @@
+h1,h2, h3 {
+    font-family: 'Roboto', sans-serif;
+    color: #678797;
+    border-bottom: 1px dashed #ddd6d6;
+    padding-bottom: .2em;
+}
+h3 {
+    border: 0;
+}
+
 #page0 {
     background-image: url("../img/education.jpg");
     background-size: cover;
@@ -22,6 +32,7 @@
     background: rgb(220, 220, 220); /* Fallback color */
     background: rgba(239, 231, 212, 0.1); /* Black background with 0.5 opacity */
     padding: 20px;
+    border: 0;
 }
 
 .quote {
@@ -112,7 +123,8 @@ p {
     top:0;
     bottom:0;
     width:80%;
-    height: 500px;
+    height: 480px;
+    border: 10px solid #FAFAFA;
 }
 
 .mapLegends {
@@ -145,9 +157,32 @@ p {
 }
 
 .blurb{
-    padding: 50px;
+    padding: 50px 0;
 }
 
 .chart-padding{
     padding: 20px;
+}
+
+.lineGraphLegendText {
+    font-size: .8em;
+}
+.lineGraphCard {
+    color: #0376BA;
+}
+.lineGraphCardList {
+    font-size: .9em;
+    color: #0376BA;
+}
+
+.legend text {
+    font-size: .8em;
+}
+
+ul {
+    font-size: .8em;
+}
+
+path , line , text{
+    shape-rendering: crispEdges;
 }
