@@ -74,7 +74,7 @@ DLMap.prototype.initVis = function () {
     });
 
 
-    vis.map = L.map("map").setView([37.8, -96], 4);
+    vis.map = L.map("map").setView([37.8, -95], 3);
 
     L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
@@ -85,6 +85,13 @@ DLMap.prototype.initVis = function () {
 
 
     vis.pruneCluster = new PruneClusterForLeaflet();
+
+    // $(window).on("resize", function() {
+    //     $("#map").height($(window).height()).width($(window).width());
+    //     map.invalidateSize();
+    // }).trigger("resize");
+
+
 
     vis.wrangleData();
 

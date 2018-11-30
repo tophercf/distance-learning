@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="css/nouislider.min.css">
     <link rel="stylesheet" href="css/leaflet.css">
     <link rel="stylesheet" href="css/LeafletStyleSheet.css">
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">-->
 
 
 
@@ -50,9 +51,9 @@
         </div>
 
         <div id="page1" class="section">
-            <div class="container-fluid">
+            <div class="container">
                 <div class="row">
-                    <div class="col-5 blurb">
+                    <div class="col-5">
                         <div>
                             <h2>Not Having a Degree Can Cost You</h2>
                         </div>
@@ -65,7 +66,8 @@
                         <p><b>Hover</b> over the data points to see the cumulative lifetime earnings.</p>
                         <p><b>Click</b> the data points to see the difference in cumulative lifetime earnings between
                             different groups.</p>
-                        <div id="income-detail"></div>
+
+                        <div id="income-detail" class="card"></div>
                     </div>
                     <div class="col-7">
                         <div id="income-chart"></div>
@@ -90,20 +92,20 @@
                             that the Massive Online Learning format has grown in popularity year over year.</p>
                         <p>Using the dropdown, check out the trends for these two universities leveraging remote
                             learning.</p>
-                        <select class="form-control" id="user-trend-selection" onchange="stackedChart.wrangleData()">
+                        <select class="form-control mb-2" id="user-trend-selection" onchange="stackedChart.wrangleData()">
                             <option value="Total Participants" selected>Total Participants</option>
                             <option value="Total Hours (Thousands)">Total Hours (Thousands)</option>
                             <option value="# Participants Certified"># Participants Certified</option>
                         </select>
-                        <p>
-                            <div>The four functional areas we looked at include:</div>
+
+                            <p class="mb-1">The four functional areas we looked at include:</p>
                             <ul>
                                 <li><b>CS</b>: Computer Science</li>
                                 <li><b>GHSS</b>: Government, Health, and Social Science</li>
                                 <li><b>HHRDE</b>: Humanities, History, Design, Religion, and Education</li>
                                 <li><b>STEM</b>: Science, Technology, Engineering, and Mathematics</li>
                             </ul>
-                        </p>
+
                         <div>Source: <a href="http://year4.odl.mit.edu/appendix.html">HarvardX-MITx Year 4 Report</a>
                         </div>
                     </div>
@@ -117,15 +119,16 @@
 
 
         <div id="page3" class="section">
-            <div class="container" style="height: 100%;">
+            <div class="container" style="height: 95%">
                 <div class="row">
                     <div class="col mt-4">
-                        <h2>It's not just Harvard and MIT Either...</h2>
-                        <p>
+                        <h2>Distance Learning Opportunities (2007 - 20017)</h2>
+                        <p class="mb-4">
                             Over the span of 2004-2017, the number of institutions that added remote learning
                             opportunities
-                            increased by 48.9%. This is an unprecedented shift into alternative learning and based on the
-                            trend, it's here to stay.
+                            increased by an average of <b>48.9%</b>. Most of the increase was in the non public institutes. (ex: Private for-profit institutes increased by <b>334%</b>).
+                            <br>
+                            Navigate on the map, zoom and slide over the years to look for more details.
                         </p>
 
                         <!--<p>-->
@@ -189,15 +192,8 @@
                 </div>
                 <div class="row">
                     <div class="col d-flex">
-                        <!--<img src="img/map.png" class="img-fluid" />-->
-                        <!--<button id="play">Play</button>-->
-
-<!--<<<<<<< Updated upstream-->
-                        <!--<div id="dlMap" class="mt-4"></div>-->
-                        <!--<div id="map"></div>-->
-<!--=======-->
                         <div class="mapwrapper mt-4 mx-auto justify-content-center">
-                            <div id="map"></div>
+                            <div id="map" class="shadow-sm p-3 mb-5 bg-white rounded" style=""></div>
                         </div>
 
 
@@ -207,11 +203,11 @@
             </div>
         </div>
         <div id="page4" class="section">
-            <div class="container-fluid">
+            <div class="container">
                 <div class="row">
-                    <div class="col-5 blurb">
-                        <h2>Who is sticking with online learning?</h2>
-                        </br>
+                    <div class="col-5 blurb pr-4">
+                        <h2>Who is Sticking With Online Learning?</h2>
+
                         <p>
                             Despite an overall increase in online learners, retention trends differ significantly between graduate and
                             undergraduate students, with low- and high-earning graduate students seeing dramatic
@@ -315,6 +311,8 @@
     <script src="js/vendor/nouislider.min.js"></script>
     <script src="js/vendor/leaflet.js"></script>
     <script src="js/vendor/PruneCluster.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/velocity-animate@2.0/velocity.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/velocity-animate@2.0/velocity.ui.min.js"></script>
 
 
     <!-- Load data, create visualizations -->
