@@ -170,6 +170,8 @@ MinMaxIncomeChart.prototype.initVis = function() {
         })
         .attr("font-size", "14");
 
+
+
     vis.wrangleData();
 }
 
@@ -304,7 +306,7 @@ MinMaxIncomeChart.prototype.updateVis = function() {
                         return "orange";
                 }
                 else {
-                    if (i >= (vis.allCoordinates.length / 2))
+                    if (i > (vis.allCoordinates.length / 2))
                         return "blue";
                     else
                         return "orange";
@@ -312,6 +314,8 @@ MinMaxIncomeChart.prototype.updateVis = function() {
             } )
             .style("stroke", "lightgrey")
             .style("stroke-width", 2);
+
+
 
     //exit selection for plots
     circlePlot.exit().remove();
@@ -333,16 +337,16 @@ MinMaxIncomeChart.prototype.updateVis = function() {
     var linePlot = vis.svg.selectAll('line')
         .data(vis.allCoordinates, function(d){ return d});
 
-    linePlot.enter()
+    var drawLines = linePlot.enter()
             .append('line')
         .merge(linePlot)
             .style('stroke', 'lightgrey')
             .style('stroke-width', 2)
-        // .transition().duration(1000)
             .attr('x1', function(d, i){
                 if (i < (vis.allCoordinates.length / 2)) {   //only looks for coordinates on first half in order to not duplicate
                     return vis.x(Math.min((vis.allCoordinates[i].x), (vis.allCoordinates[i + 11].x)));
                 }
+                // console.log(vis.allCoordinates[2]);
             })
             .attr('y1', function(d, i) {
                 if (i < (vis.allCoordinates.length / 2)) {   //only looks for coordinates on first half in order to not duplicate
@@ -359,7 +363,12 @@ MinMaxIncomeChart.prototype.updateVis = function() {
                     return vis.y(Math.max((vis.allCoordinates[i].y), (vis.allCoordinates[i + 11].y)));
                 }
             });
-    //
+
+    // linePlot.transition().duration(1000)
+    //     .attr("d", function (d) {
+    //         return drawLines(d);
+    //     });
+
     // linePlot.transition()
     // .duration(1000)
     // .tween("value", function(d, i){
