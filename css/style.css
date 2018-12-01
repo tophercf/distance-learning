@@ -21,6 +21,12 @@ h3 {
     background-size: cover;
 }
 
+#page2 {
+    background-image: url("../img/fabian-blank-78637-unsplash.jpg");
+
+    background-size: cover;
+}
+
 .section {
     background: whitesmoke;
 }
