@@ -164,7 +164,7 @@ MinMaxIncomeChart.prototype.initVis = function() {
         })
         .attr("font-size", "14");
 
-    vis.toggleSelected = "no";
+    vis.toggleCount = 0;
 
     vis.wrangleData();
 }
@@ -175,8 +175,10 @@ MinMaxIncomeChart.prototype.wrangleData = function() {
 
     vis = this;
 
+    vis.toggleCount++;
+
     //sets undergraduate value for first time, then updates value when button toggled each subsequent time
-    if (vis.toggleSelected == "no") {
+    if (vis.toggleCount < 2) {
         vis.selectedStatus = "Undergraduate";
     }
     else {
@@ -189,7 +191,6 @@ MinMaxIncomeChart.prototype.wrangleData = function() {
 
     // //find single max value of both 2012 and 2016 sets
     vis.max2012and2016 = Math.max(findMax(2012), findMax(2016));
-    // console.log("max is " + vis.max2012and2016);
 
     //find max of all values for specific year (2012 or 2016)
     function findMax(year) {
@@ -211,7 +212,6 @@ MinMaxIncomeChart.prototype.wrangleData = function() {
 
     //find single min value of both 2012 and 2016 sets
     vis.min2012and2016 = Math.min(findMin(2012), findMin(2016));
-    // console.log("min is " + vis.min2012and2016);
 
     //find min of all values for specific year (2012 or 2016)
     function findMin(year) {
@@ -277,7 +277,6 @@ MinMaxIncomeChart.prototype.updateVis = function() {
             if (i < (vis.allCoordinates.length / 2)) {   //only looks for coordinates on first half in order to not duplicate
                 return vis.x(Math.min((vis.allCoordinates[i].x), (vis.allCoordinates[i + 11].x)));
             }
-            // console.log(vis.allCoordinates[2]);
         })
         .attr('y1', function(d, i) {
             if (i < (vis.allCoordinates.length / 2)) {   //only looks for coordinates on first half in order to not duplicate
@@ -312,8 +311,6 @@ MinMaxIncomeChart.prototype.updateVis = function() {
     //update selection for dots
     var circlePlot = vis.svg.selectAll("circle")
         .data(vis.allCoordinates, function(d){ return d });
-
-    console.log(vis.allCoordinates);
 
     //enter selection for plots
     circlePlot.enter()
@@ -361,9 +358,6 @@ MinMaxIncomeChart.prototype.updateVis = function() {
 //listens for button change and calls wrangle data with new undergraduate/graduate status data
 $('#grad-status input').on('change', function() {
     var newValue = $("input:radio:checked").val();
-    // console.log("new value is " + newValue);
-
-    vis.toggleSelected = "yes";
 
     //skips initviz but re-wrangles data and updates viz accordingly
     minmaxincomechart.wrangleData();
