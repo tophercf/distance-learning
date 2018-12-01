@@ -179,7 +179,7 @@ MinMaxIncomeChart.prototype.wrangleData = function() {
 
     //sets undergraduate value for first time, then updates value when button toggled each subsequent time
     if (vis.toggleCount < 2) {
-        vis.selectedStatus = "Undergraduate";
+        vis.selectedStatus = "Graduate";
     }
     else {
         vis.selectedStatus = $("input:radio:checked").val();       //gets new button value from HTML
