@@ -36,7 +36,7 @@ MinMaxIncomeChart.prototype.initVis = function() {
         .attr("x", vis.width/10)
         .attr("y", -20)
         .attr("class", "chart-title")
-        .text("Percentage of learners based on household income");
+        .text("Change in learner profile by household income");
 
     //-----set scales and axes----------
 
