@@ -31,6 +31,13 @@ MinMaxIncomeChart.prototype.initVis = function() {
         .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
 
+    // set chart title
+    vis.svg.append("text")
+        .attr("x", vis.width/10)
+        .attr("y", -20)
+        .attr("class", "chart-title")
+        .text("Percentage of learners based on household income");
+
     //-----set scales and axes----------
 
     vis.x = d3.scaleLinear()
@@ -116,14 +123,14 @@ MinMaxIncomeChart.prototype.initVis = function() {
         },
     ];
 
-    var legendHeight = 90;
-    var legendWidth = 110;
+    vis.legendHeight = 90;
+    vis.legendWidth = 110;
 
     vis.lengendBackground = vis.svg.append("rect")
         .attr("class", "legend-background")
-        .attr("height", legendHeight)
-        .attr("width", legendWidth)
-        .attr("x", vis.width - legendWidth)
+        .attr("height", vis.legendHeight)
+        .attr("width", vis.legendWidth)
+        .attr("x", vis.width - vis.legendWidth)
         .attr("y", 0)
         .attr("fill", "lightgrey")
         .attr("border", "solid black 3px");
@@ -138,7 +145,7 @@ MinMaxIncomeChart.prototype.initVis = function() {
 
     //adds rectangles for legend
     legend.append('rect')
-        .attr('transform', 'translate(' + (vis.width - legendWidth + 10) + ',' + 0 + ')')
+        .attr('transform', 'translate(' + (vis.width - vis.legendWidth + 10) + ',' + 0 + ')')
         .attr('height', 12)
         .attr('width', 12)
         .attr('y', function(d, i){
@@ -147,9 +154,7 @@ MinMaxIncomeChart.prototype.initVis = function() {
         .attr('x', 0)
         .style('fill', function(d, i){
             return 'fill', vis.legendData[i].color
-        })
-        .style("stroke", "lightgrey")
-        .style("stroke-width", 2);
+        });
 
     //adds text for legend
     legend.append('text')
@@ -163,6 +168,46 @@ MinMaxIncomeChart.prototype.initVis = function() {
             return vis.legendData[i].year
         })
         .attr("font-size", "14");
+
+    vis.exemplarLegendHeight = 40;
+    vis.exemplarLegendWidth = 110;
+
+    //adds second exemplar legend background
+    vis.exemplarLengendBackground = vis.svg.append("rect")
+        .attr("class", "legend-background")
+        .attr("height", vis.exemplarLegendHeight)
+        .attr("width", vis.exemplarLegendWidth)
+        .attr("x", vis.width - vis.exemplarLegendWidth)
+        .attr("y", vis.legendHeight + 5)
+        .attr("fill", "#B0B0B0");
+
+    //change percentage descriptor
+    vis.svg.append("text")
+        .attr('transform', 'translate(' + (vis.width - vis.exemplarLegendWidth) + ',' + vis.legendHeight + ')')
+        .attr("x", vis.exemplarLegendWidth/2)
+        .attr("y", vis.exemplarLegendHeight - 2)
+        .attr("class", "exemplar-label-text")
+        .attr("text-anchor", "middle")
+        .text("% Change");
+
+    //exmplar year dot percentage descriptor
+    vis.svg.append("text")
+        .attr('transform', 'translate(' + (vis.width - vis.exemplarLegendWidth) + ',' + vis.legendHeight + ')')
+        .attr("x", vis.exemplarLegendWidth * .8)
+        .attr("y", vis.exemplarLegendHeight - 24)
+        .attr("class", "exemplar-label-text")
+        .attr("text-anchor", "middle")
+        .text("Year");
+
+    //exmplar year dot percentage descriptor
+    vis.svg.append("text")
+        .attr('transform', 'translate(' + (vis.width - vis.exemplarLegendWidth) + ',' + vis.legendHeight + ')')
+        .attr("x", vis.exemplarLegendWidth * .2)
+        .attr("y", vis.exemplarLegendHeight - 24)
+        .attr("class", "exemplar-label-text")
+        .attr("text-anchor", "middle")
+        .text("Year");
+
 
     vis.toggleCount = 0;
 
@@ -350,6 +395,32 @@ MinMaxIncomeChart.prototype.updateVis = function() {
 
     vis.svg.select(".x-axis").call(vis.xAxis);
 
+
+    //add legend line after updates to other lines
+    vis.legendLine = vis.svg.append('line')
+        .attr('transform', 'translate(' + (vis.width - vis.exemplarLegendWidth) + ',' + vis.legendHeight + ')')
+        .attr("x1", vis.exemplarLegendWidth * .2)
+        .attr("y1", vis.exemplarLegendHeight - 13)
+        .attr("x2", vis.exemplarLegendWidth * .8)
+        .attr("y2", vis.exemplarLegendHeight - 13)
+        .style("stroke", "lightgrey")
+        .style("stroke-width", 2);
+
+
+    //add legend circles after updates to other lines
+    vis.svg.append("circle")
+        .attr('transform', 'translate(' + (vis.width - vis.exemplarLegendWidth) + ',' + vis.legendHeight + ')')
+        .attr("r", 6)
+        .attr("fill", "lightgrey")
+        .attr("cx", vis.exemplarLegendWidth * .8)
+        .attr("cy", vis.exemplarLegendHeight - 13);
+
+    vis.svg.append("circle")
+        .attr('transform', 'translate(' + (vis.width - vis.exemplarLegendWidth) + ',' + vis.legendHeight + ')')
+        .attr("r", 6)
+        .attr("fill", "lightgrey")
+        .attr("cx", vis.exemplarLegendWidth * .2)
+        .attr("cy", vis.exemplarLegendHeight - 13);
 }
 
 

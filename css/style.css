@@ -201,3 +201,8 @@ ul {
 path , line , text{
     shape-rendering: crispEdges;
 }
+
+.exemplar-label-text{
+    font-size: 9px;
+    color: lightgrey;
+}
