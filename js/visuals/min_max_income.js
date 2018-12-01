@@ -280,6 +280,55 @@ MinMaxIncomeChart.prototype.updateVis = function() {
     vis.x.domain([vis.min2012and2016 - 2, vis.max2012and2016 + 2]);
     vis.y.domain([0, vis.data.length]);
 
+    //----generate lines------
+
+    // vis.svg.append("g")
+    //     .attr("class", "lines");
+
+    //draws lines between points
+    var linePlot = vis.svg.selectAll('line')
+        .data(vis.allCoordinates, function(d){ return d});
+
+    var drawLines = linePlot.enter()
+        .append('line')
+        .merge(linePlot)
+        .style('stroke', 'lightgrey')
+        .style('stroke-width', 2)
+        .attr('x1', function(d, i){
+            if (i < (vis.allCoordinates.length / 2)) {   //only looks for coordinates on first half in order to not duplicate
+                return vis.x(Math.min((vis.allCoordinates[i].x), (vis.allCoordinates[i + 11].x)));
+            }
+            // console.log(vis.allCoordinates[2]);
+        })
+        .attr('y1', function(d, i) {
+            if (i < (vis.allCoordinates.length / 2)) {   //only looks for coordinates on first half in order to not duplicate
+                return vis.y(Math.min((vis.allCoordinates[i].y), (vis.allCoordinates[i + 11].y)));
+            }
+        })
+        .attr('x2', function(d, i) {
+            if (i < (vis.allCoordinates.length / 2)) {   //only looks for coordinates on first half in order to not duplicate
+                return vis.x(Math.max((vis.allCoordinates[i].x), (vis.allCoordinates[i + 11].x)));
+            }
+        })
+        .attr('y2', function(d, i) {
+            if (i < (vis.allCoordinates.length / 2)) {   //only looks for coordinates on first half in order to not duplicate
+                return vis.y(Math.max((vis.allCoordinates[i].y), (vis.allCoordinates[i + 11].y)));
+            }
+        });
+
+    // linePlot.transition().duration(1000)
+    //     .attr("d", function (d) {
+    //         return drawLines(d);
+    //     });
+
+    // linePlot.transition()
+    // .duration(1000)
+    // .tween("value", function(d, i){
+    //     var i = d3.interpolate(this.value, this.max);
+    //     return function(t){ this.value = i(t);}
+    // })
+
+    linePlot.exit().remove();
 
     //update selection for dots
     var circlePlot = vis.svg.selectAll("circle")
@@ -295,7 +344,6 @@ MinMaxIncomeChart.prototype.updateVis = function() {
             .style("fill", function(d, i) {
                 if (i > (vis.allCoordinates.length / 2)) {
                     if (vis.allCoordinates[i].x == vis.allCoordinates[i - 11].x){
-                        console.log(i + "coordinates match");
                         return "grey";
                     }
                     else if (i >= (vis.allCoordinates.length / 2))
@@ -326,55 +374,7 @@ MinMaxIncomeChart.prototype.updateVis = function() {
 
     vis.svg.select(".x-axis").call(vis.xAxis);
 
-    //----generate lines------
 
-    // vis.svg.append("g")
-    //     .attr("class", "lines");
-
-    //draws lines between points
-    var linePlot = vis.svg.selectAll('line')
-        .data(vis.allCoordinates, function(d){ return d});
-
-    var drawLines = linePlot.enter()
-            .append('line')
-        .merge(linePlot)
-            .style('stroke', 'lightgrey')
-            .style('stroke-width', 2)
-            .attr('x1', function(d, i){
-                if (i < (vis.allCoordinates.length / 2)) {   //only looks for coordinates on first half in order to not duplicate
-                    return vis.x(Math.min((vis.allCoordinates[i].x), (vis.allCoordinates[i + 11].x)));
-                }
-                // console.log(vis.allCoordinates[2]);
-            })
-            .attr('y1', function(d, i) {
-                if (i < (vis.allCoordinates.length / 2)) {   //only looks for coordinates on first half in order to not duplicate
-                    return vis.y(Math.min((vis.allCoordinates[i].y), (vis.allCoordinates[i + 11].y)));
-                }
-            })
-            .attr('x2', function(d, i) {
-                if (i < (vis.allCoordinates.length / 2)) {   //only looks for coordinates on first half in order to not duplicate
-                    return vis.x(Math.max((vis.allCoordinates[i].x), (vis.allCoordinates[i + 11].x)));
-                }
-            })
-            .attr('y2', function(d, i) {
-                if (i < (vis.allCoordinates.length / 2)) {   //only looks for coordinates on first half in order to not duplicate
-                    return vis.y(Math.max((vis.allCoordinates[i].y), (vis.allCoordinates[i + 11].y)));
-                }
-            });
-
-    // linePlot.transition().duration(1000)
-    //     .attr("d", function (d) {
-    //         return drawLines(d);
-    //     });
-
-    // linePlot.transition()
-    // .duration(1000)
-    // .tween("value", function(d, i){
-    //     var i = d3.interpolate(this.value, this.max);
-    //     return function(t){ this.value = i(t);}
-    // })
-
-    linePlot.exit().remove();
 
 }
 
