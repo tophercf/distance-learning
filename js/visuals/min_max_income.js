@@ -4,7 +4,6 @@
  * @param _parentElement 					-- the HTML element in which to draw the visualization
  * @param _data	                            -- data for graduate vs undergraduate enrolment
  */
-// var vis;
 
 MinMaxIncomeChart = function(_parentElement, _data) {
     this.parentElement = _parentElement;
@@ -117,9 +116,6 @@ MinMaxIncomeChart.prototype.initVis = function() {
         },
     ];
 
-    // console.log("legend data is");
-    // console.log(vis.legendData);
-
     var legendHeight = 90;
     var legendWidth = 110;
 
@@ -179,29 +175,17 @@ MinMaxIncomeChart.prototype.wrangleData = function() {
 
     vis = this;
 
-    console.log(vis.toggleSelected);
-
-    // console.log("data on return is: ");
-    // console.log(vis.data);
-
-
-    //sets undergraduate value for first time, allows, updated value when button toggled each subsequent time
+    //sets undergraduate value for first time, then updates value when button toggled each subsequent time
     if (vis.toggleSelected == "no") {
         vis.selectedStatus = "Undergraduate";
     }
     else {
-        vis.selectedStatus = $("input:radio:checked").val();       //gets graduate status button value from HTML
+        vis.selectedStatus = $("input:radio:checked").val();       //gets new button value from HTML
     }
-
-
-    // console.log("grad/undergrad is " + vis.selectedStatus);
 
     //set configs to data naming conventions
     vis.status2012 = vis.selectedStatus + "2012";
     vis.status2016 = vis.selectedStatus + "2016";
-
-    console.log(vis.selectedStatus);
-
 
     // //find single max value of both 2012 and 2016 sets
     vis.max2012and2016 = Math.max(findMax(2012), findMax(2016));
@@ -221,10 +205,6 @@ MinMaxIncomeChart.prototype.wrangleData = function() {
 
         //take top value of descending array as maximum
         var maxYear = (mostToLeast[0][vis.selectedStatus + year]);
-        // console.log("max " + year + " is " + maxYear);
-        //
-        // console.log("most to least " + year + ":");
-        // console.log(mostToLeast);
 
         return maxYear;
     }
@@ -248,10 +228,6 @@ MinMaxIncomeChart.prototype.wrangleData = function() {
 
         //take top value of descending array as maximum
         var minYear = (leastToMost[0][vis.selectedStatus + year]);
-        // console.log("min " + year + " is " + minYear);
-        //
-        // console.log("least to most " + year + ":");
-        // console.log(leastToMost);
 
         return minYear;
     }
@@ -268,17 +244,11 @@ MinMaxIncomeChart.prototype.wrangleData = function() {
     }
 
     vis.coordinates2012 = getCoordinates(vis.data, vis.status2012, "IncomeLevel");
-    // console.log("2012 coords: ");
-    // console.log(vis.coordinates2012);
 
     vis.coordinates2016 = getCoordinates(vis.data, vis.status2016, "IncomeLevel");
-    // console.log("2016 coords: ");
-    // console.log(vis.coordinates2016);
 
     //combines all coordinates for passing into circle generator
     vis.allCoordinates = vis.coordinates2012.concat(vis.coordinates2016);
-    // console.log("coordinates upon combined array: ");
-    // console.log(vis.allCoordinates);
 
     vis.updateVis();
 }
@@ -293,9 +263,6 @@ MinMaxIncomeChart.prototype.updateVis = function() {
     vis.y.domain([0, vis.data.length]);
 
     //----generate lines------
-
-    // vis.svg.append("g")
-    //     .attr("class", "lines");
 
     //draws lines between points
     var linePlot = vis.svg.selectAll('line')
@@ -377,8 +344,6 @@ MinMaxIncomeChart.prototype.updateVis = function() {
         .append("title")
         .text(function(d){ return "" + d.x + "%" });
 
-
-
     //exit selection for plots
     circlePlot.exit().remove();
 
@@ -389,8 +354,6 @@ MinMaxIncomeChart.prototype.updateVis = function() {
         .attr("dy", ".15em");
 
     vis.svg.select(".x-axis").call(vis.xAxis);
-
-
 
 }
 
