@@ -336,8 +336,6 @@ MinMaxIncomeChart.prototype.updateVis = function() {
                         return "orange";
                 }
             } )
-            .style("stroke", "lightgrey")
-            .style("stroke-width", 2)
         .append("title")
         .text(function(d){ return "" + d.x + "%" });
 
