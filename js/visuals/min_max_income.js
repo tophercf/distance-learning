@@ -168,7 +168,7 @@ MinMaxIncomeChart.prototype.initVis = function() {
         })
         .attr("font-size", "14");
 
-
+    vis.toggleSelected = "no";
 
     vis.wrangleData();
 }
@@ -179,16 +179,28 @@ MinMaxIncomeChart.prototype.wrangleData = function() {
 
     vis = this;
 
+    console.log(vis.toggleSelected);
+
     // console.log("data on return is: ");
     // console.log(vis.data);
 
-    //gets graduate status button value from HTML
-    vis.selectedStatus = $("input:radio:checked").val();
+
+    //sets undergraduate value for first time, allows, updated value when button toggled each subsequent time
+    if (vis.toggleSelected == "no") {
+        vis.selectedStatus = "Undergraduate";
+    }
+    else {
+        vis.selectedStatus = $("input:radio:checked").val();       //gets graduate status button value from HTML
+    }
+
+
     // console.log("grad/undergrad is " + vis.selectedStatus);
 
     //set configs to data naming conventions
     vis.status2012 = vis.selectedStatus + "2012";
     vis.status2016 = vis.selectedStatus + "2016";
+
+    console.log(vis.selectedStatus);
 
 
     // //find single max value of both 2012 and 2016 sets
@@ -334,6 +346,8 @@ MinMaxIncomeChart.prototype.updateVis = function() {
     var circlePlot = vis.svg.selectAll("circle")
         .data(vis.allCoordinates, function(d){ return d });
 
+    console.log(vis.allCoordinates);
+
     //enter selection for plots
     circlePlot.enter()
             .append("circle")
@@ -342,7 +356,7 @@ MinMaxIncomeChart.prototype.updateVis = function() {
             .attr("cx", function(d, i){ return vis.x(d.x) })
             .attr("cy", function(d, i){ return vis.y(d.y) })
             .style("fill", function(d, i) {
-                if (i > (vis.allCoordinates.length / 2)) {
+                if (i >= (vis.allCoordinates.length / 2)) {
                     if (vis.allCoordinates[i].x == vis.allCoordinates[i - 11].x){
                         return "grey";
                     }
@@ -359,7 +373,9 @@ MinMaxIncomeChart.prototype.updateVis = function() {
                 }
             } )
             .style("stroke", "lightgrey")
-            .style("stroke-width", 2);
+            .style("stroke-width", 2)
+        .append("title")
+        .text(function(d){ return "" + d.x + "%" });
 
 
 
@@ -383,6 +399,8 @@ MinMaxIncomeChart.prototype.updateVis = function() {
 $('#grad-status input').on('change', function() {
     var newValue = $("input:radio:checked").val();
     // console.log("new value is " + newValue);
+
+    vis.toggleSelected = "yes";
 
     //skips initviz but re-wrangles data and updates viz accordingly
     minmaxincomechart.wrangleData();
