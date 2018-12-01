@@ -55,6 +55,7 @@ LineGraph.prototype.initVis = function () {
     vis.svg.append("text")
         .attr("x", vis.width/10)
         .attr("y", 0)
+        .attr("class", "chart-title")
         .text("Cumulative Lifetime Earnings by Educational Attainment");
 
     // Axis labels

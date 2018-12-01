@@ -54,7 +54,7 @@ StackedChart.prototype.initVis = function () {
     vis.svg.append("text")
         .attr("x", vis.width / 10)
         .attr("y", 0)
-        .style("font-size", "20px")
+        .attr("class", "chart-title")
         .text("Online Class Data Shows Upward Trend in Participation");
 
     // y axis label

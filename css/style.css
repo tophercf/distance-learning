@@ -8,6 +8,14 @@ h3 {
     border: 0;
 }
 
+.x-label, .y-label {
+    font-size: 15px;
+}
+
+.chart-title {
+    font-size: 18px;
+}
+
 #page0 {
     background-image: url("../img/education.jpg");
     background-size: cover;

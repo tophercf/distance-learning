@@ -83,23 +83,21 @@ MinMaxIncomeChart.prototype.initVis = function() {
 
     //x axis label text
     vis.svg.append("text")
-        .attr("class", "x label")
+        .attr("class", "x-label")
         .attr("text-anchor", "end")
         .attr("x", vis.width)
         .attr("y", vis.height - 6)
         .attr("font-size", "12")
-        .style("font-weight", "bold")
         .text("Percentage of online learners (%)");
 
     //y axis label text
     vis.svg.append("text")
-        .attr("class", "y label")
+        .attr("class", "y-label")
         .attr("text-anchor", "end")
         .attr("y", 6)
         .attr("dy", ".75em")
         .attr("transform", "rotate(-90)")
         .attr("font-size", "12")
-        .style("font-weight", "bold")
         .text("Total household income by year ($)");
 
     //----generate legend
