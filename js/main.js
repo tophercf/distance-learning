@@ -1,25 +1,11 @@
 $(document).ready(function () {
+    // $("#map").height($(window).height() - 300);
     $('#fullpage').fullpage({
 
         //options here
         navigation: true,
         verticalCentered: true,
         anchors: ['Welcome', 'CostOfNotHavingDegree', 'HighCostOfDegree', 'OnlineCoursesReduceGap', 'TheRightOfEducation' , 'DistanceLearningMap' , 'HighIncomeStudents' ,'Conclusion'],
-        afterLoad: function( anchorLink, index){
-            var loadedSlide = $(this);
-
-            // console.log("test run")
-
-            //first slide of the second section
-            if(index == 3){
-                alert("Section 3 ended loading");
-            }
-
-            //using anchorLink
-            if(anchorLink == 'fourthPage'){
-                alert("Section 2 ended loading");
-            }
-        },
         licenseKey: 'OPEN-SOURCE-GPLV3-LICENSE'
     });
 

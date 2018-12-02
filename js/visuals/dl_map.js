@@ -22,15 +22,17 @@ DLMap = function (_parentElement, _data) {
     this.wrangleData();
 };
 
-
+//initialize the viz
 DLMap.prototype.initVis = function () {
     var vis = this;
 
 
+    //Years slider
     vis.yearSlider = document.getElementById('yearSlider');
     vis.playSlider = $('#playSlider');
     vis.timer;
 
+    //function to start the slider when click play btn
     vis.startSlider = function(){
         dlMap.yearSlider.noUiSlider.set(+dlMap.yearSlider.noUiSlider.get()+1);
         if (+vis.yearSlider.noUiSlider.get() === 2017) {
@@ -39,14 +41,16 @@ DLMap.prototype.initVis = function () {
         };
     };
 
+    // click listener to start or pause the slider
     vis.playSlider.on("click", function () {
         if (vis.playSlider.hasClass("fa-play-circle")) {
             $('#playSlider').removeClass('fa-play-circle').addClass('fa-pause-circle');
+            // check if the slider is at the end
             if (+vis.yearSlider.noUiSlider.get() !== 2017) {
-                console.log("Play");
+                // console.log("Play");
                 vis.timer = setInterval(vis.startSlider, 2000);
             }
-            else
+            else    //if at the end restart the slider
             {
                 console.log("Reset");
                 dlMap.yearSlider.noUiSlider.set(2004);
@@ -54,7 +58,7 @@ DLMap.prototype.initVis = function () {
                 // clearInterval(vis.timer);
             }
         }
-        else //if (vis.playSlider.hasClass("fa-pause-circle"))
+        else // if paused, change the icon, clear the timer to stop the slider
         {
             $('#playSlider').removeClass('fa-pause-circle').addClass('fa-play-circle');
             clearInterval(vis.timer);
@@ -62,6 +66,7 @@ DLMap.prototype.initVis = function () {
 
     });
 
+    // initialize the slider
     noUiSlider.create(yearSlider, {
         start: [2004],
         step: 1,
@@ -72,10 +77,12 @@ DLMap.prototype.initVis = function () {
         pips : {mode: 'steps',density: 10}
     });
 
-    
 
+
+    // initialize the map
     vis.map = L.map("map").setView([37.8, -95], 3);
 
+    // add the tiles
     L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd',
@@ -84,15 +91,11 @@ DLMap.prototype.initVis = function () {
 
 
 
+    // initialize the cluster plugin
     vis.pruneCluster = new PruneClusterForLeaflet();
 
-    // $(window).on("resize", function() {
-    //     $("#map").height($(window).height()).width($(window).width());
-    //     map.invalidateSize();
-    // }).trigger("resize");
 
-
-
+    //wrangle the data
     vis.wrangleData();
 
 }
@@ -103,7 +106,10 @@ DLMap.prototype.wrangleData = function() {
     var vis = this;
     var dataD = [];
 
+    // loop over the data and group it by years, each year will have its institutes which had DL opportunities
     for (var i = 2004; i <= 2017; i++) {
+
+        // this check because the data before 2012 was having different column name (different survey)
         if(i < 2012) {
             dataD.push(d3.nest().key(a => a["Distance learning opportunities (IC"+i+")"]).entries(vis.data)
                 .filter(a => a.key == "1")
@@ -142,8 +148,8 @@ DLMap.prototype.wrangleData = function() {
     }
 
     dataD = dataD.map(d => d[0]); //flatten the array of objects
-    // console.log(dataD);
 
+    // pass the data to the year slider where its on the first load will be on 0 position (2004)
     vis.yearSlider.noUiSlider.on('update', function (values, handle, unencoded, tap, positions) {
         //pick the selected data - the easy way :D
         vis.displayData = dataD[unencoded - 2004];
@@ -155,8 +161,7 @@ DLMap.prototype.wrangleData = function() {
 
 DLMap.prototype.updateVis = function () {
     vis = this;
-
-    //the date we needs
+    //the date we need (display data)
     var points = vis.displayData.values;
 
     //get the totals for the legends
@@ -226,7 +231,6 @@ DLMap.prototype.updateVis = function () {
         //     className: 'myDivIcon' + a["Institutional control or affiliation (IC2017)"]
         // });
 
-        // test = tt;
 
         //add the icon
         marker.data.icon = L.icon({iconUrl: iconImg});
@@ -236,8 +240,6 @@ DLMap.prototype.updateVis = function () {
 
     }
     vis.pruneCluster.ProcessView();
-
-
 
 
     vis.map.addLayer(vis.pruneCluster);
