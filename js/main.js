@@ -4,11 +4,11 @@ $(document).ready(function () {
         //options here
         navigation: true,
         verticalCentered: true,
-        anchors: ['firstPage', 'secondPage', 'thirdPage', 'fourthPage', 'fifthPage' ,'lastPage'],
+        anchors: ['Welcome', 'CostOfNotHavingDegree', 'HighCostOfDegree', 'OnlineCoursesReduceGap', 'TheRightOfEducation' , 'DistanceLearningMap' , 'HighIncomeStudents' ,'Conclusion'],
         afterLoad: function( anchorLink, index){
             var loadedSlide = $(this);
 
-            console.log("test run")
+            // console.log("test run")
 
             //first slide of the second section
             if(index == 3){

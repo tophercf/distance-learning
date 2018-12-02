@@ -23,10 +23,12 @@ h3 {
 
 #page2 {
     background-image: url("../img/fabian-blank-78637-unsplash.jpg");
-
     background-size: cover;
 }
-
+#page4 {
+    background-image: url("../img/check-class-desk-7103.jpg");
+    background-size: cover;
+}
 
 .section {
     background: whitesmoke;
@@ -48,8 +50,17 @@ h3 {
     background: rgba(239, 231, 212, 0.1); /* Black background with 0.5 opacity */
     padding: 20px;
     border: 0;
-}
 
+}
+.facts {
+    background: rgb(220, 220, 220); /* Fallback color */
+    background: rgba(239, 231, 212, .5); /* Black background with 0.5 opacity */
+    padding: 20px;
+    border: 0;
+    line-height: 2em;
+    /*text-align: center;*/
+    color: #062c33;
+}
 .quote {
     font-size: 45px;
     margin-top: 45px;
@@ -138,7 +149,7 @@ p {
     top:0;
     bottom:0;
     width:80%;
-    height: 480px;
+    height: 460px;
     border: 10px solid #FAFAFA;
 }
 

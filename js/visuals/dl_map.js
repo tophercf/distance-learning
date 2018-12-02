@@ -11,7 +11,7 @@
 
 
 
-
+//initiate the Object
 DLMap = function (_parentElement, _data) {
     this.parentElement = _parentElement;
     this.data = _data;
@@ -24,11 +24,10 @@ DLMap = function (_parentElement, _data) {
 
 
 DLMap.prototype.initVis = function () {
-
     var vis = this;
 
-    vis.yearSlider = document.getElementById('yearSlider');
 
+    vis.yearSlider = document.getElementById('yearSlider');
     vis.playSlider = $('#playSlider');
     vis.timer;
 
@@ -73,6 +72,7 @@ DLMap.prototype.initVis = function () {
         pips : {mode: 'steps',density: 10}
     });
 
+    
 
     vis.map = L.map("map").setView([37.8, -95], 3);
 
@@ -216,7 +216,7 @@ DLMap.prototype.updateVis = function () {
         }
 
         // Get the title and info then append to the popup
-        var title = intitute["Institution Name"] + "<br>" + instType;
+        var title = intitute["Institution Name"] + "<br><b>Type:</b> " + instType;
         marker.data.popup = title;
 
         //this code was to try to use font awesome icon instead of an image icon .. but wasn't that nice!!
