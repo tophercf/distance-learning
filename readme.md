@@ -14,9 +14,9 @@ Goals and Motivation: With the rise of online courses, many educational institut
 
 
 ### **Project Structure** 
-The project is broken out by asset type, with the main `index.html` file serving as the main project index. 
+The project is broken out by asset type, with the main `index.html` file serving as the main project index for the website. 
 
-.
+    .
     ├── css                   # stylesheet directory 
     │   ├── vendor            # vendor css files used to support various functionality 
     │   └── style.css         # custom css 
