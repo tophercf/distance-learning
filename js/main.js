@@ -5,7 +5,7 @@ $(document).ready(function () {
         //options here
         navigation: true,
         verticalCentered: true,
-        anchors: ['Welcome', 'CostOfNotHavingDegree', 'HighCostOfDegree', 'OnlineCoursesReduceGap', 'TheRightOfEducation' , 'DistanceLearningMap' , 'HighIncomeStudents' ,'Conclusion'],
+        anchors: ['Welcome', 'CostOfNotHavingDegree', 'HighCostOfDegree', 'OnlineCoursesReduceGap', 'TheRightOfEducation' , 'DistanceLearningMap' , 'HighIncomeStudents' ,'Conclusion','ScreenCast'],
         licenseKey: 'OPEN-SOURCE-GPLV3-LICENSE'
     });
 
