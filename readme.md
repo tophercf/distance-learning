@@ -33,10 +33,8 @@ The project is broken out by asset type, with the main `index.html` file serving
 
 
 ### **Navigating the Website Interface** 
+The website leverages fullpage.js, which allows the user to scroll in a linear fashion through the project and story elements. This scrolling allows the user to be taken through the introduction, main visuals, and transition elements in order from intro to conclusion. The last sections *Conclusion* and *How this Project Came Together* also contains more information about the project, some references and our team member information.
 
-In the website, there is a navigation panel at the top of the page which can be used to jump to specific sections of the site. More specifically, *About the Project* gives an overview of the storyline of the project. The following four sections correspond to four main visualization chapters which you can browse through one by one. The last section *About Us* contains more information about the project, some references and our contact information.
-
-Each chapter starts off with some motivating texts, followed by one or two visualizations that illustrate the points made in the texts with actual data. Feel free to navigate your mouse to the different elements of our visualizations, as most of them are designed with interactivity. Don't forget to visit the *Recommendations* section to take away with some handy tips on what to do if you suspect that your online information has been breached into.
 
 
 
