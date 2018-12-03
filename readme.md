@@ -10,7 +10,7 @@ Goals and Motivation: With the rise of online courses, many educational institut
 - **Project website:** [cs171-distance-learning.herokuapp.com/](https://cs171-distance-learning.herokuapp.com/)
 
 
-- **Screencast video:** [www.youtube.com/watch?v=_FikhhDc73o&feature=youtu.be](https://www.youtube.com/watch?v=_FikhhDc73o&feature=youtu.be)
+- **Screencast video:** [www.youtube.com/watch?v=wC0s567w8QE](https://www.youtube.com/watch?v=wC0s567w8QE)
 
 
 ### **Project Structure** 
